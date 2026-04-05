@@ -352,7 +352,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 .admin-mobile-panel {
   display: none;
   position: fixed;
-  top: 70px;
+  top: 96px;
   left: 0;
   right: 0;
   background: var(--surface);
@@ -364,7 +364,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  padding: 8px 16px;
+  padding: 12px 16px;
   gap: 8px;
   flex-wrap: nowrap;
 }
@@ -377,10 +377,10 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
+  padding: 10px 16px;
   background: var(--bg);
   border-radius: 40px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-muted);
   cursor: pointer;
@@ -417,41 +417,28 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 }
 
 /* Стрелки прокрутки для мобильной панели */
-.mobile-scroll-btn {
-  display: none;
-  position: fixed;
-  top: 70px;
-  width: 32px;
-  height: 44px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  cursor: pointer;
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--accent);
-  backdrop-filter: blur(4px);
-  box-shadow: var(--shadow-sm);
-}
 
-.mobile-scroll-btn.left {
-  left: 4px;
-}
-
-.mobile-scroll-btn.right {
-  right: 4px;
-}
 
 @media (max-width: 768px) {
-  .admin-mobile-panel {
-    display: none;
+  body {
+    overflow-x: hidden;
+    width: 100%;
   }
-  .admin-mobile-panel.show {
-    display: flex;
+  
+  .container {
+    width: 100%;
+    padding: 0 16px;
+    overflow-x: hidden;
   }
-  .mobile-scroll-btn {
+  
+  /* Исправление карусели */
+  .carousel-track-outer {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+   
+    .mobile-scroll-btn {
     display: flex;
   }
   .mobile-admin-toggle {
@@ -459,6 +446,29 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   }
   /* Скрываем стандартную кнопку панели на телефонах, используем новую */
   .nav-auth .btn-primary.btn-sm:not(.mobile-admin-toggle) {
+    display: none;
+  }
+
+  .carousel-track-outer {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    transform: none !important; /* Отключаем transform для свайпа */
+  }
+  
+  .carousel-item {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+  
+  /* Скрываем кнопки карусели на телефонах (работает свайп) */
+  .carousel-btns {
     display: none;
   }
 }  
@@ -506,8 +516,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   <div class="mobile-admin-item" data-section="howto">🚂 Как мы ездим</div>
   <div class="mobile-admin-item" data-section="contacts">📞 Контакты</div>
 </div>
-<button class="mobile-scroll-btn left" id="mobileScrollLeft" onclick="scrollMobilePanel(-150)">◀</button>
-<button class="mobile-scroll-btn right" id="mobileScrollRight" onclick="scrollMobilePanel(150)">▶</button>  
+
 
 <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
 <div id="page-home">
@@ -934,10 +943,43 @@ function openDetail(id) { const p = programs.find(x => x.id === id); if (!p) ret
 // ============================================================
 // === КАРУСЕЛЬ ИЗБРАННЫХ ======================================
 // ============================================================
-function renderFeaturedCarousel() { const featured = programs.filter(p => p.featured); const section = document.getElementById('featured-section'); if (featured.length === 0) { section.style.display = 'none'; return; } section.style.display = ''; const track = document.getElementById('carousel-track'); track.innerHTML = featured.map(p => '<div class="carousel-item" onclick="openDetail(' + p.id + ')"><div class="carousel-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '</div><div class="carousel-body"><div style="margin-bottom:8px;"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div><div class="carousel-title">' + p.name + '</div><div class="carousel-meta"><span>📅 ' + p.days + ' дн.</span><span>' + (p.transport==='поезд'?'🚂':p.transport==='самолёт'?'✈️':'🚗') + ' ' + p.transport + '</span></div><div class="carousel-price">' + p.price.toLocaleString('ru') + ' ₽</div></div></div>').join(''); carouselOffset = 0; updateCarousel(); }
+function renderFeaturedCarousel() { 
+  const featured = programs.filter(p => p.featured); 
+  const section = document.getElementById('featured-section'); 
+  if (featured.length === 0) { 
+    section.style.display = 'none'; 
+    return; 
+  } 
+  section.style.display = ''; 
+  const track = document.getElementById('carousel-track'); 
+  track.innerHTML = featured.map(p => '<div class="carousel-item" onclick="openDetail(' + p.id + ')"><div class="carousel-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '</div><div class="carousel-body"><div style="margin-bottom:8px;"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div><div class="carousel-title">' + p.name + '</div><div class="carousel-meta"><span>📅 ' + p.days + ' дн.</span><span>' + (p.transport==='поезд'?'🚂':p.transport==='самолёт'?'✈️':'🚗') + ' ' + p.transport + '</span></div><div class="carousel-price">' + p.price.toLocaleString('ru') + ' ₽</div></div></div>').join(''); 
+  carouselOffset = 0; 
+  
+  // На телефонах не используем transform, только на десктопе
+  if (window.innerWidth > 768) {
+    updateCarousel();
+  }
+}
 function updateCarousel() { const track = document.getElementById('carousel-track'); const items = track.querySelectorAll('.carousel-item'); const itemWidth = items.length > 0 ? items[0].offsetWidth + 24 : 0; const maxOffset = Math.max(0, items.length - 3); if (carouselOffset > maxOffset) carouselOffset = maxOffset; track.style.transform = 'translateX(-' + (carouselOffset * itemWidth) + 'px)'; }
-function carouselNext() { carouselOffset++; updateCarousel(); }
-function carouselPrev() { if (carouselOffset > 0) { carouselOffset--; updateCarousel(); } }
+function carouselNext() { 
+  const track = document.getElementById('carousel-track');
+  const items = track.querySelectorAll('.carousel-item');
+  const itemWidth = items.length > 0 ? items[0].offsetWidth + 24 : 0;
+  const maxOffset = Math.max(0, items.length - 3);
+  if (carouselOffset < maxOffset) {
+    carouselOffset++;
+    track.style.transform = `translateX(-${carouselOffset * itemWidth}px)`;
+  }
+}
+function carouselPrev() { 
+  if (carouselOffset > 0) {
+    carouselOffset--;
+    const track = document.getElementById('carousel-track');
+    const items = track.querySelectorAll('.carousel-item');
+    const itemWidth = items.length > 0 ? items[0].offsetWidth + 24 : 0;
+    track.style.transform = `translateX(-${carouselOffset * itemWidth}px)`;
+  }
+}
 
 // ============================================================
 // === ФИЛЬТР ==================================================
@@ -1138,7 +1180,7 @@ function showUserStats(userId) { const u = users.find(x=>x.id===userId); const u
 let isMobilePanelOpen = false;
 let mobilePanelInitialized = false;
 
-function toggleMobileAdminPanel() {
+  function toggleMobileAdminPanel() {
   // Работает только на телефонах
   if (window.innerWidth > 768) return;
   
@@ -1161,6 +1203,11 @@ function toggleMobileAdminPanel() {
       mobilePanelInitialized = true;
     }
     updateActiveMobileItem();
+    // Прокручиваем к активному пункту
+    const activeItem = panel.querySelector('.mobile-admin-item.active');
+    if (activeItem) {
+      activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   } else {
     panel.classList.remove('show');
     if (mobileToggle) mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
@@ -1188,20 +1235,34 @@ function mobileItemClickHandler(e) {
   
   // Переключаем раздел в админ-панели
   if (currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin')) {
-    // Обновляем активный пункт в боковом меню
-    document.querySelectorAll('.admin-nav-item').forEach(navItem => {
-      navItem.classList.remove('active');
-      if (navItem.getAttribute('onclick') && navItem.getAttribute('onclick').includes(section)) {
-        navItem.classList.add('active');
+    // Находим соответствующий пункт в боковом меню и активируем его
+    const navItems = document.querySelectorAll('.admin-nav-item');
+    let targetIndex = -1;
+    navItems.forEach((item, idx) => {
+      const onclickAttr = item.getAttribute('onclick');
+      if (onclickAttr && onclickAttr.includes(section)) {
+        targetIndex = idx;
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
       }
     });
-    // Вызываем переключение
+    
+    // Вызываем переключение раздела
     switchAdmin(section);
+    
     // Обновляем активный пункт в мобильной панели
     updateActiveMobileItem();
+    
+    // Прокручиваем админ-панель к нужному разделу
+    const activeSection = document.getElementById('admin-' + section);
+    if (activeSection) {
+      activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }
-function updateActiveMobileItem() {
+
+  function updateActiveMobileItem() {
   // Находим активный раздел в админ-панели
   const activeSection = document.querySelector('.admin-section.active');
   if (!activeSection) return;
@@ -1220,6 +1281,8 @@ function updateActiveMobileItem() {
   document.querySelectorAll('.mobile-admin-item').forEach(item => {
     if (item.dataset.section === activeSectionName) {
       item.classList.add('active');
+      // Автоматически прокручиваем к активному пункту
+      item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     } else {
       item.classList.remove('active');
     }
