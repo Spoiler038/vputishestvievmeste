@@ -347,6 +347,121 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 @media (max-width: 1024px) { .container { padding: 0 20px; } .about-grid, .contact-wrap, .footer-grid { gap: 40px; } .programs-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; } }
 @media (max-width: 768px) { .container { padding: 0 16px; } .navbar-inner { flex-wrap: wrap; gap: 10px; padding: 12px 16px; } .logo { font-size: 16px; } .nav-links { display: none; } .hero { min-height: auto; padding-top: 100px; padding-bottom: 60px; } .hero h1 { font-size: clamp(36px, 8vw, 48px); } .hero-sub { font-size: 14px; } .hero-actions { flex-direction: column; gap: 12px; } .hero-actions .btn { width: 100%; justify-content: center; } .hero-stats { flex-wrap: wrap; gap: 24px; margin-top: 40px; padding-top: 30px; } .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; } .about-photo-wrap { max-width: 280px; margin: 0 auto; } .section { padding: 60px 0; } .section-title { font-size: 32px; } .how-grid { grid-template-columns: 1fr; gap: 16px; } .programs-grid { grid-template-columns: 1fr; } .filter-bar { padding: 16px; } .filter-row { grid-template-columns: 1fr; gap: 12px; } .filter-tags { gap: 6px; } .filter-tag { padding: 4px 10px; font-size: 11px; } .carousel-item { flex: 0 0 calc(85% - 12px); } .steps { flex-direction: column; gap: 20px; } .steps::before { display: none; } .step { text-align: left; display: flex; gap: 15px; align-items: flex-start; padding: 0; } .step-num { margin: 0; flex-shrink: 0; } .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; } .footer-brand p { max-width: 100%; } .footer-bottom { flex-direction: column; text-align: center; } .admin-layout { grid-template-columns: 1fr; } .admin-sidebar { display: none; } .admin-main { padding: 20px; } .admin-page-title { font-size: 28px; } .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .stat-value { font-size: 28px; } .admin-table { font-size: 11px; } .admin-table th, .admin-table td { padding: 8px 10px; } .td-actions { flex-direction: column; gap: 5px; } .modal { padding: 20px; } .modal-title { font-size: 22px; } .modal-grid { grid-template-columns: 1fr; } .program-detail-grid { grid-template-columns: 1fr; } .program-detail-title { font-size: 32px; } .booking-card { position: static; margin-top: 20px; } .profile-grid { grid-template-columns: 1fr; } .profile-card { max-width: 300px; margin: 0 auto; } .dashboard-tabs { width: 100%; justify-content: center; } .tab-btn { padding: 6px 12px; font-size: 12px; } .trip-item { flex-direction: column; text-align: center; } .revenue-grid { grid-template-columns: repeat(6, 1fr); } .rev-month { font-size: 9px; } .rev-amount { font-size: 9px; } .auth-box { padding: 30px 24px; margin: 0 16px; } .auth-logo p { font-size: 22px; } .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; } .back-to-top svg { width: 20px; height: 20px; } }
 @media (max-width: 480px) { .container { padding: 0 12px; } .hero h1 { font-size: 32px; } .section-title { font-size: 28px; } .about-value { gap: 10px; } .about-value-icon { width: 32px; height: 32px; font-size: 14px; } .stats-grid { grid-template-columns: 1fr; } .revenue-grid { grid-template-columns: repeat(4, 1fr); } .program-title { font-size: 18px; } .program-price { font-size: 20px; } .carousel-item { flex: 0 0 calc(95% - 12px); } .admin-main { padding: 16px; } }
+
+/* ===== МОБИЛЬНАЯ ПАНЕЛЬ АДМИНИСТРАТОРА ===== */
+.admin-mobile-panel {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  z-index: 99;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding: 8px 16px;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.admin-mobile-panel.show {
+  display: flex;
+}
+
+.admin-mobile-panel .mobile-admin-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg);
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.admin-mobile-panel .mobile-admin-item.active {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.admin-mobile-panel .mobile-admin-item:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+/* Кнопка открытия/закрытия мобильной панели */
+.mobile-admin-toggle {
+  display: none;
+  background: var(--accent2);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Стрелки прокрутки для мобильной панели */
+.mobile-scroll-btn {
+  display: none;
+  position: fixed;
+  top: 70px;
+  width: 32px;
+  height: 44px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--accent);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.mobile-scroll-btn.left {
+  left: 4px;
+}
+
+.mobile-scroll-btn.right {
+  right: 4px;
+}
+
+@media (max-width: 768px) {
+  .admin-mobile-panel {
+    display: none;
+  }
+  .admin-mobile-panel.show {
+    display: flex;
+  }
+  .mobile-scroll-btn {
+    display: flex;
+  }
+  .mobile-admin-toggle {
+    display: inline-flex;
+  }
+  /* Скрываем стандартную кнопку панели на телефонах, используем новую */
+  .nav-auth .btn-primary.btn-sm {
+    display: none;
+  }
+}  
 </style>
 </head>
 <body>
@@ -354,24 +469,44 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 <!-- ===== НАВИГАЦИЯ ===== -->
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
-    <a class="logo" href="#" onclick="showPage('home')"><span>В</span>ПУТЕШЕСТВИЕВМЕСТЕ</a>
-    <div class="nav-links">
-      <a href="#" onclick="smoothScroll('programs')">ПРОГРАММЫ</a>
-      <a href="#" onclick="smoothScroll('about')">ОБ ОСНОВАТЕЛЕ</a>
-      <a href="#" onclick="smoothScroll('how')">КАК МЫ ЕЗДИМ</a>
-      <a href="#" onclick="smoothScroll('gallery')">ГАЛЕРЕЯ</a>
-      <a href="#" onclick="smoothScroll('contact')">КОНТАКТЫ</a>
-    </div>
-    <div class="nav-auth">
-      <div id="guest-menu"><button class="btn btn-outline btn-sm" onclick="openAuth()">ВОЙТИ</button></div>
+  <a class="logo" href="#" onclick="showPage('home')"><span>В</span>ПУТЕШЕСТВИЕВМЕСТЕ</a>
+  <div class="nav-links">
+    <a href="#" onclick="smoothScroll('programs')">ПРОГРАММЫ</a>
+    <a href="#" onclick="smoothScroll('about')">ОБ ОСНОВАТЕЛЕ</a>
+    <a href="#" onclick="smoothScroll('how')">КАК МЫ ЕЗДИМ</a>
+    <a href="#" onclick="smoothScroll('gallery')">ГАЛЕРЕЯ</a>
+    <a href="#" onclick="smoothScroll('contact')">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-auth">
+     <div id="guest-menu"><button class="btn btn-outline btn-sm" onclick="openAuth()">ВОЙТИ</button></div>
       <div id="user-menu" class="hidden">
-        <div class="user-avatar" id="user-avatar-small" onclick="document.getElementById('avatar-upload-small').click()"><span id="avatar-letter-small">М</span><input type="file" id="avatar-upload-small" accept="image/*" style="display:none"></div>
-        <div class="user-info"><span id="username-display" class="username">Марина</span><button class="btn btn-outline btn-sm" onclick="showPage('dashboard')">ПРОФИЛЬ</button></div>
-        <button class="btn btn-primary btn-sm hidden" id="admin-btn" onclick="showPage('admin')">⚙ ПАНЕЛЬ</button>
+        <div class="user-avatar" id="user-avatar-small" onclick="document.getElementById('avatar-upload-small').click()">
+          <span id="avatar-letter-small">М</span>
+          <input type="file" id="avatar-upload-small" accept="image/*" style="display:none">
+        </div>
+        <div class="user-info">
+          <span id="username-display" class="username">Марина</span>
+          <button class="btn btn-outline btn-sm" onclick="showPage('dashboard')">ПРОФИЛЬ</button>
+        </div>
+        <button class="btn btn-primary btn-sm" id="admin-btn" onclick="toggleMobileAdminPanel()">⚙ ПАНЕЛЬ</button>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- Мобильная панель администратора -->
+<div class="admin-mobile-panel" id="adminMobilePanel">
+  <div class="mobile-admin-item" data-section="dashboard">📊 Дашборд</div>
+  <div class="mobile-admin-item" data-section="programs">🗺 Программы</div>
+  <div class="mobile-admin-item" data-section="users">👥 Пользователи</div>
+  <div class="mobile-admin-item" data-section="leads">📩 Заявки</div>
+  <div class="mobile-admin-item" data-section="settings">⚙️ Настройки</div>
+  <div class="mobile-admin-item" data-section="founder">👤 Об основателе</div>
+  <div class="mobile-admin-item" data-section="howto">🚂 Как мы ездим</div>
+  <div class="mobile-admin-item" data-section="contacts">📞 Контакты</div>
+</div>
+<button class="mobile-scroll-btn left" id="mobileScrollLeft" onclick="scrollMobilePanel(-150)">◀</button>
+<button class="mobile-scroll-btn right" id="mobileScrollRight" onclick="scrollMobilePanel(150)">▶</button>  
 
 <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
 <div id="page-home">
@@ -745,22 +880,44 @@ function doRegister() {
 function logout() { currentUser = null; updateNavForUser(); showPage('home'); showToast('Вы вышли из аккаунта'); }
 function updateNavForUser() {
   const guestMenu = document.getElementById('guest-menu');
-  const userMenu  = document.getElementById('user-menu');
-  const adminBtn  = document.getElementById('admin-btn');
+  const userMenu = document.getElementById('user-menu');
+  const adminBtn = document.getElementById('admin-btn');
+  
   if (currentUser) {
-    guestMenu.classList.add('hidden'); userMenu.classList.remove('hidden');
+    guestMenu.classList.add('hidden');
+    userMenu.classList.remove('hidden');
     document.getElementById('username-display').textContent = currentUser.name.split(' ')[0];
     const avatarLetter = document.getElementById('avatar-letter-small');
-    if (currentUser.avatar) { avatarLetter.innerHTML = '<img src="' + currentUser.avatar + '" style="width:100%;height:100%;object-fit:cover;">'; }
-    else { avatarLetter.innerHTML = currentUser.name[0]; }
-    adminBtn.classList.toggle('hidden', currentUser.role !== 'owner' && currentUser.role !== 'admin');
+    if (currentUser.avatar) {
+      avatarLetter.innerHTML = '<img src="' + currentUser.avatar + '" style="width:100%;height:100%;object-fit:cover;">';
+    } else {
+      avatarLetter.innerHTML = currentUser.name[0];
+    }
+    // Показываем кнопку админки для owner и admin
+    const isAdminUser = (currentUser.role === 'owner' || currentUser.role === 'admin');
+    adminBtn.classList.toggle('hidden', !isAdminUser);
+    
+    // На телефонах меняем текст кнопки
+    if (window.innerWidth <= 768 && isAdminUser) {
+      adminBtn.innerHTML = isMobilePanelOpen ? '✕ ПАНЕЛЬ' : '⚙ ПАНЕЛЬ';
+    } else {
+      adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
+    }
+    
+    // Скрываем дашборд для не-владельцев
     const dashboardNavItem = document.querySelector('.admin-nav-item[onclick*="dashboard"]');
-    if (dashboardNavItem) { dashboardNavItem.style.display = currentUser.role === 'owner' ? 'flex' : 'none'; }
+    if (dashboardNavItem) {
+      dashboardNavItem.style.display = currentUser.role === 'owner' ? 'flex' : 'none';
+    }
   } else {
-    guestMenu.classList.remove('hidden'); userMenu.classList.add('hidden');
+    guestMenu.classList.remove('hidden');
+    userMenu.classList.add('hidden');
+    // Закрываем мобильную панель при выходе
+    const panel = document.getElementById('adminMobilePanel');
+    if (panel) panel.classList.remove('show');
+    isMobilePanelOpen = false;
   }
 }
-
 // ============================================================
 // === КАРТОЧКИ ПРОГРАММ =======================================
 // ============================================================
@@ -970,7 +1127,128 @@ function loadAdminLeads() { document.getElementById('leads-tbody').innerHTML = l
 function loadRevenueChart() { const months = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек']; const byMonth = Array(12).fill(0); purchases.forEach(p => { const m = new Date(p.date).getMonth(); byMonth[m] += p.price; }); const maxVal = Math.max(...byMonth) || 1; document.getElementById('revenue-chart').innerHTML = months.map((m,i) => { const h = Math.round((byMonth[i]/maxVal)*110) + 4; const k = byMonth[i] > 0 ? (byMonth[i]/1000).toFixed(0)+'к' : '—'; return '<div class="rev-bar-wrap" onclick="showRevenueDetails(' + i + ')"><div class="rev-bar" style="height:' + h + 'px;"></div><div class="rev-month">' + m + '</div><div class="rev-amount">' + k + '</div></div>'; }).join(''); }
 function showRevenueDetails(monthIndex) { const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']; const monthPurchases = purchases.filter(p => new Date(p.date).getMonth() === monthIndex); if (monthPurchases.length === 0) { document.getElementById('revenue-detail-content').innerHTML = '<p style="color:var(--text-muted);">Нет покупок за этот месяц</p>'; openModal('revenue-detail-modal'); return; } const details = monthPurchases.map(pu => { const user = users.find(u => u.id === pu.userId); const prog = programs.find(p => p.id === pu.programId); return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><div><div style="font-weight:600;">' + (user ? user.name : 'Пользователь') + '</div><div style="font-size:12px;color:var(--text-muted);">' + (prog ? prog.name : 'Программа') + '</div></div><div style="font-weight:600;color:var(--accent2);">' + pu.price.toLocaleString('ru') + ' ₽</div></div>'; }).join(''); document.getElementById('revenue-detail-content').innerHTML = '<h3 style="font-family:var(--font-family);font-size:20px;margin-bottom:15px;">' + months[monthIndex] + ' ' + new Date().getFullYear() + '</h3>' + details + '<div style="margin-top:15px;padding-top:10px;border-top:2px solid var(--accent);display:flex;justify-content:space-between;font-weight:700;"><span>Итого:</span><span>' + monthPurchases.reduce((s,p)=>s+p.price,0).toLocaleString('ru') + ' ₽</span></div>'; openModal('revenue-detail-modal'); }
 function showUserStats(userId) { const u = users.find(x=>x.id===userId); const userPurchases = purchases.filter(p=>p.userId===userId); const total = userPurchases.reduce((s,p)=>s+p.price,0); document.getElementById('user-stats-content').innerHTML = '<div style="margin-bottom:18px;display:flex;align-items:center;gap:14px;"><div class="user-avatar" style="width:52px;height:52px;font-size:22px;">' + u.name[0] + '</div><div><div style="font-size:20px;font-family:var(--font-family);font-weight:500;">' + u.name + '</div><div style="font-size:13px;color:var(--text-muted);">' + u.email + '</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;"><div class="stat-card"><div class="stat-label">Путешествий</div><div class="stat-value" style="font-size:32px;">' + userPurchases.length + '</div></div><div class="stat-card"><div class="stat-label">Потрачено</div><div class="stat-value" style="font-size:32px;">' + (total/1000).toFixed(0) + 'к ₽</div></div></div><h4 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:10px;">История покупок</h4>' + (userPurchases.length === 0 ? '<p style="color:var(--text-muted);">Пока нет покупок.</p>' : userPurchases.map(pu => { const prog = programs.find(p=>p.id===pu.programId); return '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);"><div><div style="font-weight:600;">' + (prog?prog.name:'—') + '</div><div style="font-size:12px;color:var(--text-muted);">' + pu.date + '</div></div><div style="font-family:var(--font-family);font-size:19px;font-weight:600;color:var(--accent2);">' + pu.price.toLocaleString('ru') + ' ₽</div></div>'; }).join('')); openModal('user-stats-modal'); }
+// ============================================================
+// === МОБИЛЬНАЯ ПАНЕЛЬ АДМИНИСТРАТОРА =========================
+// ============================================================
+let isMobilePanelOpen = false;
+let mobilePanelInitialized = false;
 
+function toggleMobileAdminPanel() {
+  if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) {
+    showToast('Доступ запрещён');
+    return;
+  }
+  
+  const panel = document.getElementById('adminMobilePanel');
+  const adminBtn = document.getElementById('admin-btn');
+  if (!panel) return;
+  
+  isMobilePanelOpen = !isMobilePanelOpen;
+  
+  if (isMobilePanelOpen) {
+    panel.classList.add('show');
+    if (adminBtn && window.innerWidth <= 768) adminBtn.innerHTML = '✕ ПАНЕЛЬ';
+    if (!mobilePanelInitialized) {
+      initMobileAdminItems();
+      mobilePanelInitialized = true;
+    }
+    updateActiveMobileItem();
+  } else {
+    panel.classList.remove('show');
+    if (adminBtn && window.innerWidth <= 768) adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
+  }
+}
+  
+function initMobileAdminItems() {
+  const items = document.querySelectorAll('.mobile-admin-item');
+  items.forEach(item => {
+    item.removeEventListener('click', mobileItemClickHandler);
+    item.addEventListener('click', mobileItemClickHandler);
+  });
+}
+
+function mobileItemClickHandler(e) {
+  const section = this.dataset.section;
+  if (!section) return;
+  
+  // Закрываем панель после выбора
+  const panel = document.getElementById('adminMobilePanel');
+  if (panel) panel.classList.remove('show');
+  isMobilePanelOpen = false;
+  
+  // Переключаем раздел в админ-панели
+  if (currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin')) {
+    // Обновляем активный пункт в боковом меню
+    document.querySelectorAll('.admin-nav-item').forEach(navItem => {
+      navItem.classList.remove('active');
+      if (navItem.getAttribute('onclick') && navItem.getAttribute('onclick').includes(section)) {
+        navItem.classList.add('active');
+      }
+    });
+    // Вызываем переключение
+    switchAdmin(section);
+  }
+}
+
+function updateActiveMobileItem() {
+  // Находим активный раздел в админ-панели
+  const activeSection = document.querySelector('.admin-section.active');
+  if (!activeSection) return;
+  
+  const activeId = activeSection.id;
+  let activeSectionName = '';
+  if (activeId === 'admin-dashboard') activeSectionName = 'dashboard';
+  else if (activeId === 'admin-programs') activeSectionName = 'programs';
+  else if (activeId === 'admin-users') activeSectionName = 'users';
+  else if (activeId === 'admin-leads') activeSectionName = 'leads';
+  else if (activeId === 'admin-settings') activeSectionName = 'settings';
+  else if (activeId === 'admin-founder') activeSectionName = 'founder';
+  else if (activeId === 'admin-howto') activeSectionName = 'howto';
+  else if (activeId === 'admin-contacts') activeSectionName = 'contacts';
+  
+  document.querySelectorAll('.mobile-admin-item').forEach(item => {
+    if (item.dataset.section === activeSectionName) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+}
+
+// Функция прокрутки мобильной панели
+function scrollMobilePanel(offset) {
+  const panel = document.getElementById('adminMobilePanel');
+  if (panel) {
+    panel.scrollBy({ left: offset, behavior: 'smooth' });
+  }
+}
+
+// Переопределяем showPage для обновления мобильной панели при переключении на админку
+const originalShowPage = showPage;
+showPage = function(page) {
+  originalShowPage(page);
+  if (page === 'admin' && window.innerWidth <= 768) {
+    // Если админка открыта на телефоне, показываем кнопку панели по-другому
+    const adminBtn = document.getElementById('admin-btn');
+    if (adminBtn) adminBtn.style.display = 'inline-flex';
+  } else {
+    // Закрываем мобильную панель при уходе с админки
+    const panel = document.getElementById('adminMobilePanel');
+    if (panel) panel.classList.remove('show');
+    isMobilePanelOpen = false;
+  }
+};
+
+// Добавляем обработчик ресайза
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) {
+    const panel = document.getElementById('adminMobilePanel');
+    if (panel) panel.classList.remove('show');
+    isMobilePanelOpen = false;
+  }
+});
+
+  
 // ============================================================
 // === CRUD ПРОГРАММ ===========================================
 // ============================================================
