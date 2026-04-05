@@ -220,7 +220,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 .profile-card { background: var(--surface); border-radius: var(--radius); padding: 28px; border: 1px solid var(--border); text-align: center; }
 .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-family: var(--font-family); font-size: 38px; margin: 0 auto 14px; cursor: pointer; overflow: hidden; position: relative; }
 .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-upload-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 4px; text-align: center; opacity: 0; transition: opacity 0.3s; }
+.avatar-upload-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 7px; text-align: center; opacity: 0; transition: opacity 0.3s; }
 .profile-avatar:hover .avatar-upload-overlay { opacity: 1; }
 .profile-name { font-family: var(--font-family); font-size: 26px; font-weight: 500; }
 .profile-role { margin-top: 5px; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
@@ -435,8 +435,8 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
     <!-- ФОРМА ВХОДА -->
     <div class="auth-form active" id="auth-login">
       <div class="auth-error" id="login-error">Неверный логин или пароль</div>
-      <div class="form-group"><label>Логин</label><input type="text" class="form-input" id="login-username" placeholder="marina"></div>
-      <div class="form-group"><label>Пароль</label><input type="password" class="form-input" id="login-password" placeholder="••••••"></div>
+      <div class="form-group"><label>Логин</label><input type="text" class="form-input" id="login-username" placeholder=Имя пользователя"></div>
+      <div class="form-group"><label>Пароль</label><input type="password" class="form-input" id="login-password" placeholder="Пароль"></div>
       <button class="btn btn-primary auth-btn" onclick="doLogin()">Войти</button>
       <div style="text-align:center; margin-top:10px;"><a href="#" onclick="showResetPassword()" style="font-size:12px; color:var(--accent2);">Забыли пароль?</a></div>
       <div class="auth-hint">Тест: marina / owner — admin / admin — user / user</div>
