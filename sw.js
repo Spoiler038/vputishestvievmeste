@@ -1,31 +1,93 @@
-const CACHE = 'vputi-v1';
-const ASSETS = ['/', '/index.html'];
+// ============================================================
+// ВПУТЕШЕСТВИЕВМЕСТЕ — Service Worker
+// Версию обновлять при каждом деплое для инвалидации кеша
+// ============================================================
+const CACHE_NAME   = 'vputi-v1';
+const CACHE_ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-  ));
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+// ── Установка: кешируем ключевые ресурсы ──────────────────────
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(CACHE_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
-// Push уведомления (для будущей интеграции)
-self.addEventListener('push', e => {
-  const data = e.data ? e.data.json() : { title: 'Новая заявка', body: '' };
-  e.waitUntil(self.registration.showNotification(data.title, {
-    body: data.body,
-    icon: '/icons/android/192.png',
-    badge: '/icons/android/72.png',
-  }));
+// ── Активация: удаляем старые кеши ───────────────────────────
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
+  );
+});
+
+// ── Запросы: network-first, fallback кеш ─────────────────────
+self.addEventListener('fetch', event => {
+  // Пропускаем не-GET и запросы к API / Supabase / Cloudinary
+  if (event.request.method !== 'GET') return;
+  const url = event.request.url;
+  if (url.includes('supabase.co') || url.includes('cloudinary.com') ||
+      url.includes('googleapis.com') || url.includes('api.anthropic')) return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // Кешируем только успешные ответы на own-origin запросы
+        if (response.ok && url.startsWith(self.location.origin)) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
+});
+
+// ── Push уведомления ──────────────────────────────────────────
+self.addEventListener('push', event => {
+  let data = { title: 'ВПУТЕШЕСТВИЕВМЕСТЕ', body: 'Новое уведомление', icon: '/icons/android/192.png' };
+  try {
+    if (event.data) data = { ...data, ...event.data.json() };
+  } catch(e) {
+    if (event.data) data.body = event.data.text();
+  }
+
+  const options = {
+    body:    data.body,
+    icon:    data.icon || '/icons/android/192.png',
+    badge:   '/icons/android/72.png',
+    tag:     data.tag  || 'vputi-notification',
+    data:    { url: data.url || '/' },
+    actions: data.actions || [],
+    requireInteraction: data.requireInteraction || false,
+    vibrate: [200, 100, 200],
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+// ── Клик по уведомлению — открываем/фокусируем вкладку ───────
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const targetUrl = (event.notification.data && event.notification.data.url) || '/';
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then(clientList => {
+        for (const client of clientList) {
+          if (client.url === targetUrl && 'focus' in client) return client.focus();
+        }
+        if (clients.openWindow) return clients.openWindow(targetUrl);
+      })
+  );
 });
