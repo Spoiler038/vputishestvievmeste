@@ -400,9 +400,9 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   color: var(--accent);
 }
 
-/* Кнопка открытия/закрытия мобильной панели */
+/* Кнопка открытия/закрытия мобильной панели (только для телефонов) */
 .mobile-admin-toggle {
-  display: none;
+  display: none !important;
   background: var(--accent2);
   color: white;
   border: none;
@@ -455,10 +455,10 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
     display: flex;
   }
   .mobile-admin-toggle {
-    display: inline-flex;
+    display: inline-flex !important;
   }
   /* Скрываем стандартную кнопку панели на телефонах, используем новую */
-  .nav-auth .btn-primary.btn-sm {
+  .nav-auth .btn-primary.btn-sm:not(.mobile-admin-toggle) {
     display: none;
   }
 }  
@@ -488,7 +488,8 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
           <span id="username-display" class="username">Марина</span>
           <button class="btn btn-outline btn-sm" onclick="showPage('dashboard')">ПРОФИЛЬ</button>
         </div>
-        <button class="btn btn-primary btn-sm" id="admin-btn" onclick="toggleMobileAdminPanel()">⚙ ПАНЕЛЬ</button>
+        <button class="btn btn-primary btn-sm" id="admin-btn" onclick="showPage('admin')">⚙ ПАНЕЛЬ</button>
+        <button class="btn btn-primary btn-sm mobile-admin-toggle" id="mobile-admin-toggle" onclick="toggleMobileAdminPanel()" style="display:none;">⚙ ПАНЕЛЬ</button>
       </div>
     </div>
   </div>
@@ -882,6 +883,8 @@ function updateNavForUser() {
   const guestMenu = document.getElementById('guest-menu');
   const userMenu = document.getElementById('user-menu');
   const adminBtn = document.getElementById('admin-btn');
+  const mobileAdminToggle = document.getElementById('mobile-admin-toggle');
+  const isAdminUser = currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin');
   
   if (currentUser) {
     guestMenu.classList.add('hidden');
@@ -893,15 +896,17 @@ function updateNavForUser() {
     } else {
       avatarLetter.innerHTML = currentUser.name[0];
     }
-    // Показываем кнопку админки для owner и admin
-    const isAdminUser = (currentUser.role === 'owner' || currentUser.role === 'admin');
-    adminBtn.classList.toggle('hidden', !isAdminUser);
     
-    // На телефонах меняем текст кнопки
-    if (window.innerWidth <= 768 && isAdminUser) {
-      adminBtn.innerHTML = isMobilePanelOpen ? '✕ ПАНЕЛЬ' : '⚙ ПАНЕЛЬ';
-    } else {
-      adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
+    // Показываем кнопки админки для owner и admin
+    adminBtn.classList.toggle('hidden', !isAdminUser);
+    if (mobileAdminToggle) {
+      mobileAdminToggle.classList.toggle('hidden', !isAdminUser);
+      // На телефонах меняем текст кнопки
+      if (window.innerWidth <= 768 && isAdminUser) {
+        mobileAdminToggle.innerHTML = isMobilePanelOpen ? '✕ ПАНЕЛЬ' : '⚙ ПАНЕЛЬ';
+      } else if (mobileAdminToggle) {
+        mobileAdminToggle.innerHTML = '⚙ ПАНЕЛЬ';
+      }
     }
     
     // Скрываем дашборд для не-владельцев
@@ -918,7 +923,7 @@ function updateNavForUser() {
     isMobilePanelOpen = false;
   }
 }
-// ============================================================
+  // ============================================================
 // === КАРТОЧКИ ПРОГРАММ =======================================
 // ============================================================
 const seasonColors = { весна:'tag-green', лето:'tag-green', осень:'tag-orange', зима:'tag-orange' };
@@ -1134,20 +1139,23 @@ let isMobilePanelOpen = false;
 let mobilePanelInitialized = false;
 
 function toggleMobileAdminPanel() {
+  // Работает только на телефонах
+  if (window.innerWidth > 768) return;
+  
   if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) {
     showToast('Доступ запрещён');
     return;
   }
   
   const panel = document.getElementById('adminMobilePanel');
-  const adminBtn = document.getElementById('admin-btn');
+  const mobileToggle = document.getElementById('mobile-admin-toggle');
   if (!panel) return;
   
   isMobilePanelOpen = !isMobilePanelOpen;
   
   if (isMobilePanelOpen) {
     panel.classList.add('show');
-    if (adminBtn && window.innerWidth <= 768) adminBtn.innerHTML = '✕ ПАНЕЛЬ';
+    if (mobileToggle) mobileToggle.innerHTML = '✕ ПАНЕЛЬ';
     if (!mobilePanelInitialized) {
       initMobileAdminItems();
       mobilePanelInitialized = true;
@@ -1155,7 +1163,7 @@ function toggleMobileAdminPanel() {
     updateActiveMobileItem();
   } else {
     panel.classList.remove('show');
-    if (adminBtn && window.innerWidth <= 768) adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
+    if (mobileToggle) mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
   }
 }
   
@@ -1173,8 +1181,10 @@ function mobileItemClickHandler(e) {
   
   // Закрываем панель после выбора
   const panel = document.getElementById('adminMobilePanel');
+  const mobileToggle = document.getElementById('mobile-admin-toggle');
   if (panel) panel.classList.remove('show');
   isMobilePanelOpen = false;
+  if (mobileToggle && window.innerWidth <= 768) mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
   
   // Переключаем раздел в админ-панели
   if (currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin')) {
@@ -1187,9 +1197,10 @@ function mobileItemClickHandler(e) {
     });
     // Вызываем переключение
     switchAdmin(section);
+    // Обновляем активный пункт в мобильной панели
+    updateActiveMobileItem();
   }
 }
-
 function updateActiveMobileItem() {
   // Находим активный раздел в админ-панели
   const activeSection = document.querySelector('.admin-section.active');
@@ -1245,6 +1256,17 @@ window.addEventListener('resize', function() {
     const panel = document.getElementById('adminMobilePanel');
     if (panel) panel.classList.remove('show');
     isMobilePanelOpen = false;
+    // Восстанавливаем текст кнопки на десктопе
+    const adminBtn = document.getElementById('admin-btn');
+    if (adminBtn) adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
+  } else {
+    // На телефонах обновляем текст мобильной кнопки если панель открыта
+    const mobileToggle = document.getElementById('mobile-admin-toggle');
+    if (mobileToggle && isMobilePanelOpen) {
+      mobileToggle.innerHTML = '✕ ПАНЕЛЬ';
+    } else if (mobileToggle) {
+      mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
+    }
   }
 });
 
