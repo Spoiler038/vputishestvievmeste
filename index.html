@@ -3,14 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ВПУТЕШЕСТВИЕВМЕСТЕ — Авторские программы Марины Пищальниковой</title>
 <meta name="theme-color" content="#5C8A4E">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ВПУТЕШЕСТВИЕВМЕСТЕ">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/ios/180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/ios/152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="icons/ios/120.png">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<title>ВПУТЕШЕСТВИЕВМЕСТЕ — Авторские программы Марины Пищальниковой</title>
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="shortcut icon" href="icons/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -359,7 +363,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 .admin-mobile-panel {
   display: none;
   position: fixed;
-  top: 96px;
+  top: var(--navbar-h, 62px);
   left: 0;
   right: 0;
   background: var(--surface);
@@ -479,6 +483,23 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
     display: none;
   }
 }  
+
+/* ===== МОБИЛЬНЫЙ ОВЕРЛЕЙ ПАНЕЛИ УПРАВЛЕНИЯ ===== */
+#mob-admin-overlay {
+  display: none; position: fixed;
+  top: var(--navbar-h, 62px); left: 0; right: 0; bottom: 0;
+  background: var(--bg); z-index: 97; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#mob-admin-overlay.show { display: block; }
+#mob-admin-overlay .mob-admin-content { padding: 16px 16px 80px; }
+body.mob-admin-active #page-home,
+body.mob-admin-active #page-detail,
+body.mob-admin-active #page-dashboard { display: none !important; }
+/* Кнопка панели в активном режиме */
+#mobile-admin-toggle.active {
+  background: #C0392B;
+}
 </style>
 </head>
 <body>
@@ -524,6 +545,10 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   <div class="mobile-admin-item" data-section="contacts">📞 Контакты</div>
 </div>
 
+<!-- Мобильный оверлей панели управления -->
+<div id="mob-admin-overlay">
+  <div class="mob-admin-content" id="mob-admin-content"></div>
+</div>
 
 <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
 <div id="page-home">
@@ -531,9 +556,9 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 <div id="featured-section" class="featured-section" style="display:none;"><div class="container"><div class="featured-header"><div><span class="section-label">Выбор редактора</span><h2>Избранные <em style="font-style:italic;color:var(--accent2);">программы</em></h2></div><div class="carousel-btns"><button class="carousel-btn" onclick="carouselPrev()">←</button><button class="carousel-btn" onclick="carouselNext()">→</button></div></div><div class="carousel-wrap"><div class="carousel-track-outer"><div class="carousel-track" id="carousel-track"></div></div></div></div></div>
 <section class="section" id="about"><div class="container"><div class="about-grid"><div class="about-photo"><div class="about-photo-wrap" id="founder-photo-wrap"><img id="founder-photo-img" style="width:100%; height:100%; object-fit:cover; display:none;"><span id="founder-emoji">🌿</span></div><div class="about-photo-badge"><div style="font-family:var(--font-family);font-size:26px;font-weight:600;color:var(--accent2);" id="founder-years">7+</div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">лет в пути</div></div></div><div class="about-text"><span class="section-label">Основатель клуба</span><h2 style="font-size:40px;margin-bottom:22px;" id="founder-heading">Марина<br><em style="color:var(--accent2);">Пищальникова</em></h2><div id="founder-bio-content"><p>Я верю, что путешествие — это не набор достопримечательностей, а погружение в другую жизнь. Уже семь лет я создаю маршруты, которые показывают настоящую Россию, Армению, Абхазию — ту, которую не найдёшь в путеводителях.</p><p>Каждая программа рождается из личного опыта: я сама прошла этот путь, нашла лучший гестхаус, узнала, когда цветут рододендроны в Сочи и где варят лучшее хинкали в Тбилиси.</p></div><div class="about-values" id="founder-values"><div class="about-value"><div class="about-value-icon">🗺</div><div><div class="about-value-title">Авторские маршруты</div><div class="about-value-text">Каждая программа создана лично мной и проверена несколько раз.</div></div></div><div class="about-value"><div class="about-value-icon">🤝</div><div><div class="about-value-title">Небольшие группы</div><div class="about-value-text">Максимум 8–12 человек, чтобы сохранить живую атмосферу.</div></div></div><div class="about-value"><div class="about-value-icon">💬</div><div><div class="about-value-title">Живое сообщество</div><div class="about-value-text">После поездки вы остаётесь частью нашего круга путешественников.</div></div></div></div></div></div></div></section>
 <section class="section section-alt" id="how"><div class="container"><div class="section-header"><div><span class="section-label">Способы и подход</span><h2 class="section-title">Как мы <em>путешествуем</em></h2></div></div><div class="how-grid" id="how-cards-grid"></div><div style="margin-top:60px;"><h3 style="font-family:var(--font-family);font-size:30px;font-weight:500;margin-bottom:36px;text-align:center;">Как присоединиться</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-title">Выберите программу</div><div class="step-text">Используйте фильтр, чтобы найти подходящий маршрут по сезону, бюджету и типу отдыха.</div></div><div class="step"><div class="step-num">2</div><div class="step-title">Оставьте заявку</div><div class="step-text">Заполните форму на сайте или напишите Марине напрямую. Обычно отвечаем в тот же день.</div></div><div class="step"><div class="step-num">3</div><div class="step-title">Обсудим детали</div><div class="step-text">Уточним все нюансы, ответим на вопросы и согласуем место в группе.</div></div><div class="step"><div class="step-num">4</div><div class="step-title">В путь!</div><div class="step-text">Собирайте рюкзак — мы уже всё организовали. Вам остаётся только наслаждаться.</div></div></div></div></div></section>
-<section class="section" id="programs"><div class="container"><div class="section-header"><div><span class="section-label">Авторские маршруты</span><h2 class="section-title">Программы <em>путешествий</em></h2></div></div><div class="filter-bar"><div class="filter-row"><div class="filter-group"><label>Сезон</label><select class="filter-select" id="f-season" onchange="applyFilters()"><option value="">Любой</option><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="filter-group"><label>Транспорт</label><select class="filter-select" id="f-transport" onchange="applyFilters()"><option value="">Любой</option><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option></select></div><div class="filter-group"><label>Длительность</label><select class="filter-select" id="f-duration" onchange="applyFilters()"><option value="">Любая</option><option value="3-5">3–5 дней</option><option value="6-9">6–9 дней</option><option value="10-14">10–14 дней</option></select></div><div class="filter-group"><label>Участников</label><select class="filter-select" id="f-people" onchange="applyFilters()"><option value="">Любое</option><option value="1">1 человек</option><option value="2">2 человека</option><option value="3-4">3–4 человека</option><option value="5+">5 и более</option></select></div><div class="filter-group"><label>Макс. цена (₽)</label><input type="number" class="filter-input" id="f-price" placeholder="напр. 80000" oninput="applyFilters()"></div></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:9px;">Предпочтения</label><div class="filter-tags" id="pref-tags"><button class="filter-tag" data-tag="горы" onclick="toggleTag(this)">⛰ Горы</button><button class="filter-tag" data-tag="море" onclick="toggleTag(this)">🌊 Море</button><button class="filter-tag" data-tag="лес" onclick="toggleTag(this)">🌲 Лес</button><button class="filter-tag" data-tag="озёра" onclick="toggleTag(this)">🏞 Озёра</button><button class="filter-tag" data-tag="памятники" onclick="toggleTag(this)">🏛 Памятники</button><button class="filter-tag" data-tag="гастро" onclick="toggleTag(this)">🍷 Гастро</button><button class="filter-tag" data-tag="активный" onclick="toggleTag(this)">🥾 Активный</button></div></div><div class="filter-actions"><button class="btn btn-outline btn-sm" onclick="resetFilters()">Сбросить фильтры</button></div></div><div class="programs-grid" id="programs-grid"></div></div></section>
+<section class="section" id="programs"><div class="container"><div class="section-header"><div><span class="section-label">Авторские маршруты</span><h2 class="section-title">Программы <em>путешествий</em></h2></div></div><div class="filter-bar"><div class="filter-row"><div class="filter-group"><label>Сезон</label><select class="filter-select" id="f-season" onchange="applyFilters()"><option value="">Любой</option><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="filter-group"><label>Транспорт</label><select class="filter-select" id="f-transport" onchange="applyFilters()"><option value="">Любой</option><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option><option value="корабль">Корабль / паром</option></select></div><div class="filter-group"><label>Длительность</label><select class="filter-select" id="f-duration" onchange="applyFilters()"><option value="">Любая</option><option value="3-5">3–5 дней</option><option value="6-9">6–9 дней</option><option value="10-14">10–14 дней</option></select></div><div class="filter-group"><label>Участников</label><select class="filter-select" id="f-people" onchange="applyFilters()"><option value="">Любое</option><option value="1">1 человек</option><option value="2">2 человека</option><option value="3-4">3–4 человека</option><option value="5+">5 и более</option></select></div><div class="filter-group"><label>Макс. цена (₽)</label><input type="number" class="filter-input" id="f-price" placeholder="напр. 80000" oninput="applyFilters()"></div></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:9px;">Предпочтения</label><div class="filter-tags" id="pref-tags"><button class="filter-tag" data-tag="горы" onclick="toggleTag(this)">⛰ Горы</button><button class="filter-tag" data-tag="море" onclick="toggleTag(this)">🌊 Море</button><button class="filter-tag" data-tag="лес" onclick="toggleTag(this)">🌲 Лес</button><button class="filter-tag" data-tag="озёра" onclick="toggleTag(this)">🏞 Озёра</button><button class="filter-tag" data-tag="памятники" onclick="toggleTag(this)">🏛 Памятники</button><button class="filter-tag" data-tag="гастро" onclick="toggleTag(this)">🍷 Гастро</button><button class="filter-tag" data-tag="активный" onclick="toggleTag(this)">🥾 Активный</button></div></div><div class="filter-actions"><button class="btn btn-outline btn-sm" onclick="resetFilters()">Сбросить фильтры</button></div></div><div class="programs-grid" id="programs-grid"></div></div></section>
 <section class="section section-alt" id="gallery"><div class="container"><div class="section-header"><div><span class="section-label">Сообщество</span><h2 class="section-title">Галерея <em>путешественников</em></h2></div></div><div class="gallery-grid" id="gallery-grid"></div></div></section>
-<section class="section" id="contact"><div class="container"><div class="contact-wrap"><div class="contact-info"><span class="section-label">Написать Марине</span><h2 class="section-title" style="font-size:40px;">Готовы<br><em>в путь?</em></h2><p style="margin-top:18px;">Оставьте заявку, и Марина свяжется с вами в течение суток. Расскажите, куда хотите отправиться — вместе найдём подходящую программу.</p><div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;"><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">📱</span><span style="font-size:14px;color:var(--text-muted);" id="contact-phone">+7 (xxx) xxx-xx-xx</span></div><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">✉️</span><span style="font-size:14px;color:var(--text-muted);" id="contact-email">marina@vputi.ru</span></div><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">💬</span><span style="font-size:14px;color:var(--text-muted);" id="contact-tg">Telegram: @vputi_together</span></div></div></div><div class="contact-form" id="contact-form-wrap"><h3 style="font-family:var(--font-family);font-size:26px;font-weight:500;margin-bottom:22px;">Оставить заявку</h3><div class="form-group"><label>Ваше имя</label><input type="text" class="form-input" id="lead-name" placeholder="Иван Иванов"></div><div class="form-group"><label>Телефон или email</label><input type="text" class="form-input" id="lead-contact" placeholder="+7 (900) 000-00-00"></div><div class="form-group"><label>Комментарий</label><textarea class="form-textarea" id="lead-message" placeholder="Расскажите, что вас интересует..."></textarea></div><button class="btn btn-primary" style="width:100%;" onclick="submitLead()">Отправить заявку</button></div></div></div></section>
+<section class="section" id="contact"><div class="container"><div class="contact-wrap"><div class="contact-info"><span class="section-label">Написать Марине</span><h2 class="section-title" style="font-size:40px;">Готовы<br><em>в путь?</em></h2><p style="margin-top:18px;">Оставьте заявку, и Марина свяжется с вами в течение суток. Расскажите, куда хотите отправиться — вместе найдём подходящую программу.</p><div style="margin-top:28px;display:flex;flex-direction:column;gap:10px;"><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">📱</span><span style="font-size:14px;color:var(--text-muted);" id="contact-phone">+7 (xxx) xxx-xx-xx</span></div><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">✉️</span><span style="font-size:14px;color:var(--text-muted);" id="contact-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89e4e8fbe0e7e8c9fff9fcfde0a7fbfc">[email&#160;protected]</a></span></div><div style="display:flex;gap:10px;align-items:center;"><span style="font-size:18px;">💬</span><span style="font-size:14px;color:var(--text-muted);" id="contact-tg">Telegram: @vputi_together</span></div></div></div><div class="contact-form" id="contact-form-wrap"><h3 style="font-family:var(--font-family);font-size:26px;font-weight:500;margin-bottom:22px;">Оставить заявку</h3><div class="form-group"><label>Ваше имя</label><input type="text" class="form-input" id="lead-name" placeholder="Иван Иванов"></div><div class="form-group"><label>Телефон или email</label><input type="text" class="form-input" id="lead-contact" placeholder="+7 (900) 000-00-00"></div><div class="form-group"><label>Комментарий</label><textarea class="form-textarea" id="lead-message" placeholder="Расскажите, что вас интересует..."></textarea></div><button class="btn btn-primary" style="width:100%;" onclick="submitLead()">Отправить заявку</button></div></div></div></section>
 <footer><div class="container"><div class="footer-grid"><div class="footer-brand"><div class="logo" style="color:rgba(255,255,255,0.88)"><span style="color:var(--accent)">В</span>ПУТЕШЕСТВИЕВМЕСТЕ</div><p>Авторские программы путешествий по России, Армении и Абхазии. Основатель — Марина Пищальникова.</p></div><div class="footer-col"><h4>Разделы</h4><a href="#" onclick="smoothScroll('programs')">Программы</a><a href="#" onclick="smoothScroll('about')">Об основателе</a><a href="#" onclick="smoothScroll('gallery')">Галерея</a><a href="#" onclick="smoothScroll('contact')">Контакты</a></div><div class="footer-col"><h4>Аккаунт</h4><a href="#" onclick="openAuth()">Войти</a><a href="#" onclick="openAuth()">Зарегистрироваться</a><a href="#" onclick="showPage('dashboard')">Личный кабинет</a></div></div><div class="footer-bottom"><span>© 2026 ВПУТЕШЕСТВИЕВМЕСТЕ</span><span>Все права защищены</span></div></div></footer>
 </div>
 
@@ -569,10 +594,10 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 </div></div></div></div></div>
 
 <!-- ===== АДМИНИСТРАТИВНАЯ ПАНЕЛЬ ===== -->
-<div id="page-admin" class="hidden admin-panel"><div class="admin-layout"><aside class="admin-sidebar"><div class="admin-sidebar-logo">⚙ Управление</div><div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div><div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div><div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div><div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div><div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div><div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div><div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы ездим</div><div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div><div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;"><span class="admin-nav-icon">🏠</span> На сайт</div></aside><main class="admin-main"><div class="admin-section active" id="admin-dashboard"><div class="admin-page-title">Дашборд</div><div class="admin-page-sub">Сводная статистика по сайту</div><div class="stats-grid" id="stats-grid"></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;"><h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3><div class="revenue-grid" id="revenue-chart"></div></div></div><div class="admin-section" id="admin-programs"><div class="admin-page-title">Программы</div><div class="admin-page-sub">Управление маршрутами путешествий</div><div class="admin-bar-top"><button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr></thead><tbody id="programs-tbody"></tbody></table></div></div><div class="admin-section" id="admin-users"><div class="admin-page-title">Пользователи</div><div class="admin-page-sub">Список зарегистрированных участников</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr></thead><tbody id="users-tbody"></tbody></table></div></div><div class="admin-section" id="admin-leads"><div class="admin-page-title">Заявки</div><div class="admin-page-sub">Входящие запросы с сайта</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th></tr></thead><tbody id="leads-tbody"></tbody></table></div></div><div class="admin-section" id="admin-settings"><div class="admin-page-title">Настройки сайта</div><div class="admin-page-sub">Управление кодом приглашения</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Код приглашения для регистрации</label><input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026"><button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button><p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p></div></div></div><div class="admin-section" id="admin-founder"><div class="admin-page-title">Об основателе клуба</div><div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Имя (заголовок)</label><input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова"></div><div class="form-group"><label>Годы опыта (число с +)</label><input type="text" class="form-input" id="founder-admin-years" placeholder="7+"></div><div class="form-group"><label>Фото основателя (URL или загрузите)</label><div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="founder-photo-input" accept="image/*" style="display:none"></div><img id="founder-photo-preview" class="photo-preview" style="display:none; max-width:200px;"><input type="hidden" id="founder-photo-url" value=""></div><div class="form-group"><label>Основной текст (первый абзац)</label><textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea></div><div class="form-group"><label>Второй абзац</label><textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;"><div><div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div><div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div></div><div><div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div><div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div></div><div><div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div><div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div></div></div><button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button></div></div><div class="admin-section" id="admin-howto"><div class="admin-page-title">Как мы путешествуем</div><div class="admin-page-sub">Редактирование карточек способов перемещения (фото 80x80px)</div><div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div><button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button></div><div class="admin-section" id="admin-contacts"><div class="admin-page-title">Контактная информация</div><div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Телефон</label><input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx"></div><div class="form-group"><label>Email</label><input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru"></div><div class="form-group"><label>Telegram</label><input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together"></div><button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button></div></div></main></div></div>
+<div id="page-admin" class="hidden admin-panel"><div class="admin-layout"><aside class="admin-sidebar"><div class="admin-sidebar-logo">⚙ Управление</div><div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div><div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div><div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div><div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div><div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div><div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div><div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы ездим</div><div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div><div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;"><span class="admin-nav-icon">🏠</span> На сайт</div></aside><main class="admin-main"><div class="admin-section active" id="admin-dashboard"><div class="admin-page-title">Дашборд</div><div class="admin-page-sub">Сводная статистика по сайту</div><div class="stats-grid" id="stats-grid"></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;"><h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3><div class="revenue-grid" id="revenue-chart"></div></div></div><div class="admin-section" id="admin-programs"><div class="admin-page-title">Программы</div><div class="admin-page-sub">Управление маршрутами путешествий</div><div class="admin-bar-top"><button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr></thead><tbody id="programs-tbody"></tbody></table></div></div><div class="admin-section" id="admin-users"><div class="admin-page-title">Пользователи</div><div class="admin-page-sub">Список зарегистрированных участников</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr></thead><tbody id="users-tbody"></tbody></table></div></div><div class="admin-section" id="admin-leads"><div class="admin-page-title">Заявки</div><div class="admin-page-sub">Входящие запросы с сайта</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th></tr></thead><tbody id="leads-tbody"></tbody></table></div></div><div class="admin-section" id="admin-settings"><div class="admin-page-title">Настройки сайта</div><div class="admin-page-sub">Код приглашения и виды транспорта</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px;"><div class="form-group"><label>Код приглашения для регистрации</label><input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026"><button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button><p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p></div></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><h3 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:8px;">Виды транспорта</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">Выберите, какие виды транспорта отображаются в фильтре и при создании программ.</p><div style="display:flex;flex-direction:column;gap:10px;"><label class="checkbox-label" id="tl-train"><input type="checkbox" id="tc-train" onchange="saveTransportSettings()"> 🚂 Поезд</label><label class="checkbox-label" id="tl-plane"><input type="checkbox" id="tc-plane" onchange="saveTransportSettings()"> ✈️ Самолёт</label><label class="checkbox-label" id="tl-car"><input type="checkbox" id="tc-car" onchange="saveTransportSettings()"> 🚗 Авто</label><label class="checkbox-label" id="tl-ship"><input type="checkbox" id="tc-ship" onchange="saveTransportSettings()"> 🚢 Корабль / паром</label></div></div></div><div class="admin-section" id="admin-founder"><div class="admin-page-title">Об основателе клуба</div><div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Имя (заголовок)</label><input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова"></div><div class="form-group"><label>Годы опыта (число с +)</label><input type="text" class="form-input" id="founder-admin-years" placeholder="7+"></div><div class="form-group"><label>Фото основателя (URL или загрузите)</label><div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="founder-photo-input" accept="image/*" style="display:none"></div><img id="founder-photo-preview" class="photo-preview" style="display:none; max-width:200px;"><input type="hidden" id="founder-photo-url" value=""></div><div class="form-group"><label>Основной текст (первый абзац)</label><textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea></div><div class="form-group"><label>Второй абзац</label><textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;"><div><div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div><div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div></div><div><div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div><div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div></div><div><div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div><div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div></div></div><button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button></div></div><div class="admin-section" id="admin-howto"><div class="admin-page-title">Как мы путешествуем</div><div class="admin-page-sub">Редактирование карточек способов перемещения (фото 80x80px)</div><div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div><button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button></div><div class="admin-section" id="admin-contacts"><div class="admin-page-title">Контактная информация</div><div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Телефон</label><input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx"></div><div class="form-group"><label>Email</label><input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru"></div><div class="form-group"><label>Telegram</label><input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together"></div><button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button></div></div></main></div></div>
 
 <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
-<div class="modal-overlay" id="program-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="modal-program-title">Добавить программу</h2><button class="modal-close" onclick="closeModal('program-modal')">✕</button></div><div class="modal-grid"><div class="form-group full"><label>Фото программы</label><div class="photo-upload-area" onclick="document.getElementById('program-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="program-photo-input" accept="image/*" style="display:none" onchange="handleProgramPhotoUpload(event)"></div><img id="program-photo-preview" class="photo-preview" style="display:none;"><input type="hidden" id="m-photo" value=""></div><div class="form-group full"><label>Название программы</label><input type="text" class="form-input" id="m-name" placeholder="Алтай: путь к Белухе"></div><div class="form-group"><label>Сезон</label><select class="filter-select" id="m-season"><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="form-group"><label>Транспорт</label><select class="filter-select" id="m-transport"><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option></select></div><div class="form-group"><label>Длительность (дней)</label><input type="number" class="form-input" id="m-days" placeholder="7"></div><div class="form-group"><label>Макс. участников</label><input type="number" class="form-input" id="m-max-people" placeholder="10"></div><div class="form-group"><label>Цена (₽)</label><input type="number" class="form-input" id="m-price" placeholder="65000"></div><div class="form-group"><label>Страна/регион</label><input type="text" class="form-input" id="m-country" placeholder="Россия, Алтай"></div><div class="form-group full"><label>Краткое описание</label><input type="text" class="form-input" id="m-short-desc" placeholder="Суть программы одним предложением"></div><div class="form-group full"><label>Полное описание</label><textarea class="form-textarea" id="m-full-desc" placeholder="Подробный рассказ о маршруте..."></textarea></div><div class="form-group full"><label>Теги (через запятую)</label><input type="text" class="form-input" id="m-tags" placeholder="горы, лес, активный"></div><div class="form-group full"><label>Что включено (каждый пункт с новой строки)</label><textarea class="form-textarea" id="m-includes" placeholder="Трансфер из аэропорта&#10;Проживание в гестхаусах&#10;Все завтраки и ужины"></textarea></div><div class="form-group full"><label class="checkbox-label" id="featured-label" onclick="toggleFeaturedLabel()"><input type="checkbox" id="m-featured"> ⭐ Показывать на главной странице (карусель «Избранные»)</label></div></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px;"><button class="btn btn-outline" onclick="closeModal('program-modal')">Отмена</button><button class="btn btn-primary" id="save-program-btn" onclick="saveProgram()">Сохранить программу</button></div></div></div>
+<div class="modal-overlay" id="program-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="modal-program-title">Добавить программу</h2><button class="modal-close" onclick="closeModal('program-modal')">✕</button></div><div class="modal-grid"><div class="form-group full"><label>Фото программы</label><div class="photo-upload-area" onclick="document.getElementById('program-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="program-photo-input" accept="image/*" style="display:none" onchange="handleProgramPhotoUpload(event)"></div><img id="program-photo-preview" class="photo-preview" style="display:none;"><input type="hidden" id="m-photo" value=""></div><div class="form-group full"><label>Название программы</label><input type="text" class="form-input" id="m-name" placeholder="Алтай: путь к Белухе"></div><div class="form-group"><label>Сезон</label><select class="filter-select" id="m-season"><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="form-group"><label>Транспорт</label><select class="filter-select" id="m-transport"><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option><option value="корабль">Корабль / паром</option></select></div><div class="form-group"><label>Длительность (дней)</label><input type="number" class="form-input" id="m-days" placeholder="7"></div><div class="form-group"><label>Макс. участников</label><input type="number" class="form-input" id="m-max-people" placeholder="10"></div><div class="form-group"><label>Цена (₽)</label><input type="number" class="form-input" id="m-price" placeholder="65000"></div><div class="form-group"><label>Страна/регион</label><input type="text" class="form-input" id="m-country" placeholder="Россия, Алтай"></div><div class="form-group full"><label>Краткое описание</label><input type="text" class="form-input" id="m-short-desc" placeholder="Суть программы одним предложением"></div><div class="form-group full"><label>Полное описание</label><textarea class="form-textarea" id="m-full-desc" placeholder="Подробный рассказ о маршруте..."></textarea></div><div class="form-group full"><label>Теги (через запятую)</label><input type="text" class="form-input" id="m-tags" placeholder="горы, лес, активный"></div><div class="form-group full"><label>Что включено (каждый пункт с новой строки)</label><textarea class="form-textarea" id="m-includes" placeholder="Трансфер из аэропорта&#10;Проживание в гестхаусах&#10;Все завтраки и ужины"></textarea></div><div class="form-group full"><label class="checkbox-label" id="featured-label" onclick="toggleFeaturedLabel()"><input type="checkbox" id="m-featured"> ⭐ Показывать на главной странице (карусель «Избранные»)</label></div></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px;"><button class="btn btn-outline" onclick="closeModal('program-modal')">Отмена</button><button class="btn btn-primary" id="save-program-btn" onclick="saveProgram()">Сохранить программу</button></div></div></div>
 <div class="modal-overlay" id="user-stats-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title">Статистика участника</h2><button class="modal-close" onclick="closeModal('user-stats-modal')">✕</button></div><div id="user-stats-content"></div></div></div>
 <div class="modal-overlay" id="revenue-detail-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="revenue-modal-title">Детали выручки</h2><button class="modal-close" onclick="closeModal('revenue-detail-modal')">✕</button></div><div id="revenue-detail-content"></div></div></div>
 
@@ -626,7 +651,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 <div id="toast"></div>
 <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Наверх"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></button>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
 // === КОНФИГУРАЦИЯ ============================================
 // ============================================================
@@ -745,6 +770,16 @@ let purchases = loadState('purchases', [
 let leads = loadState('leads', []);
 let gallery = loadState('gallery', []);
 let inviteCodeSetting = loadState('inviteCode', 'VPUTI2026');
+let enabledTransports = loadState('enabledTransports', ['поезд','самолёт','авто','корабль']);
+
+// Все доступные виды транспорта (порядок важен)
+const ALL_TRANSPORTS = [
+  { val:'поезд',   emoji:'🚂', label:'Поезд' },
+  { val:'самолёт', emoji:'✈️',  label:'Самолёт' },
+  { val:'авто',    emoji:'🚗', label:'Авто' },
+  { val:'корабль', emoji:'🚢', label:'Корабль / паром' },
+];
+function tIcon(t) { return t==='поезд'?'🚂':t==='самолёт'?'✈️':t==='корабль'?'🚢':'🚗'; }
 
 const defaultFounderContent = { name: "Марина\nПищальникова", years: "7+", photo: "", bio1: "Я верю, что путешествие — это не набор достопримечательностей, а погружение в другую жизнь.", bio2: "Каждая программа рождается из личного опыта: я сама прошла этот путь.", val1title: "Авторские маршруты", val1text: "Каждая программа создана лично мной.", val2title: "Небольшие группы", val2text: "Максимум 8–12 человек.", val3title: "Живое сообщество", val3text: "После поездки вы остаётесь частью нашего круга." };
 let founderContent = loadState('founderContent', defaultFounderContent);
@@ -944,7 +979,7 @@ function updateNavForUser() {
 // ============================================================
 const seasonColors = { весна:'tag-green', лето:'tag-green', осень:'tag-orange', зима:'tag-orange' };
 const seasonEmoji  = { весна:'🌸', лето:'☀️', осень:'🍂', зима:'❄️' };
-function renderPrograms(list) { const grid = document.getElementById('programs-grid'); grid.innerHTML = ''; if (!list || list.length === 0) { grid.innerHTML = '<div class="no-results"><div class="no-results-icon">🔍</div><h3>Ничего не найдено</h3><p>Попробуйте изменить фильтры</p></div>'; return; } list.forEach(p => { const card = document.createElement('div'); card.className = 'program-card'; card.innerHTML = '<div class="program-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '<div class="program-season-badge"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div></div><div class="program-body"><h3 class="program-title">' + p.name + '</h3><p class="program-desc">' + p.shortDesc + '</p><div class="program-meta"><span>📅 ' + p.days + ' дней</span><span>' + (p.transport==='поезд'?'🚂':p.transport==='самолёт'?'✈️':'🚗') + ' ' + p.transport + '</span><span>👥 до ' + p.maxPeople + '</span></div><div class="program-tags">' + (p.tags||[]).map(t=>'<span class="tag tag-green">'+t+'</span>').join('') + '</div><div class="program-footer"><div class="program-price">' + p.price.toLocaleString('ru') + ' <span>₽</span></div><button class="btn btn-outline btn-sm" onclick="openDetail(' + p.id + ')">Подробнее →</button></div></div>'; grid.appendChild(card); }); }
+function renderPrograms(list) { const grid = document.getElementById('programs-grid'); grid.innerHTML = ''; if (!list || list.length === 0) { grid.innerHTML = '<div class="no-results"><div class="no-results-icon">🔍</div><h3>Ничего не найдено</h3><p>Попробуйте изменить фильтры</p></div>'; return; } list.forEach(p => { const card = document.createElement('div'); card.className = 'program-card'; card.innerHTML = '<div class="program-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '<div class="program-season-badge"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div></div><div class="program-body"><h3 class="program-title">' + p.name + '</h3><p class="program-desc">' + p.shortDesc + '</p><div class="program-meta"><span>📅 ' + p.days + ' дней</span><span>' + tIcon(p.transport) + ' ' + p.transport + '</span><span>👥 до ' + p.maxPeople + '</span></div><div class="program-tags">' + (p.tags||[]).map(t=>'<span class="tag tag-green">'+t+'</span>').join('') + '</div><div class="program-footer"><div class="program-price">' + p.price.toLocaleString('ru') + ' <span>₽</span></div><button class="btn btn-outline btn-sm" onclick="openDetail(' + p.id + ')">Подробнее →</button></div></div>'; grid.appendChild(card); }); }
 function openDetail(id) { const p = programs.find(x => x.id === id); if (!p) return; const heroDiv = document.getElementById('detail-hero'); heroDiv.innerHTML = p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '"><div class="program-hero-overlay"></div><span style="position:relative;z-index:2;font-size:80px;">🏔</span>' : '<div class="program-hero-overlay"></div><span style="position:relative;z-index:2;font-size:80px;">🏔</span>'; document.getElementById('detail-title').textContent = p.name; document.getElementById('detail-price').textContent = p.price.toLocaleString('ru'); document.getElementById('detail-full-desc').textContent = p.fullDesc; document.getElementById('detail-tags').innerHTML = (p.tags||[]).map(t=>'<span class="tag tag-green">'+t+'</span>').join('') + '<span class="tag tag-orange">'+p.season+'</span>'; document.getElementById('detail-includes').innerHTML = (p.includes||[]).map(i=>'<div class="include-item">'+i+'</div>').join(''); document.getElementById('detail-meta').innerHTML = '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Длительность</div><div style="font-weight:600;">' + p.days + ' дней</div></div><div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Транспорт</div><div style="font-weight:600;">' + p.transport + '</div></div><div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Участников</div><div style="font-weight:600;">до ' + p.maxPeople + ' чел.</div></div><div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;">Регион</div><div style="font-weight:600;">' + p.country + '</div></div>'; showPage('detail'); }
 
 // ============================================================
@@ -959,7 +994,7 @@ function renderFeaturedCarousel() {
   } 
   section.style.display = ''; 
   const track = document.getElementById('carousel-track'); 
-  track.innerHTML = featured.map(p => '<div class="carousel-item" onclick="openDetail(' + p.id + ')"><div class="carousel-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '</div><div class="carousel-body"><div style="margin-bottom:8px;"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div><div class="carousel-title">' + p.name + '</div><div class="carousel-meta"><span>📅 ' + p.days + ' дн.</span><span>' + (p.transport==='поезд'?'🚂':p.transport==='самолёт'?'✈️':'🚗') + ' ' + p.transport + '</span></div><div class="carousel-price">' + p.price.toLocaleString('ru') + ' ₽</div></div></div>').join(''); 
+  track.innerHTML = featured.map(p => '<div class="carousel-item" onclick="openDetail(' + p.id + ')"><div class="carousel-photo">' + (p.photo ? '<img src="' + p.photo + '" alt="' + p.name + '">' : '<span>🏔</span>') + '</div><div class="carousel-body"><div style="margin-bottom:8px;"><span class="tag ' + (seasonColors[p.season]||'tag-green') + '">' + (seasonEmoji[p.season]||'') + ' ' + p.season + '</span></div><div class="carousel-title">' + p.name + '</div><div class="carousel-meta"><span>📅 ' + p.days + ' дн.</span><span>' + tIcon(p.transport) + ' ' + p.transport + '</span></div><div class="carousel-price">' + p.price.toLocaleString('ru') + ' ₽</div></div></div>').join(''); 
   carouselOffset = 0; 
   
   // На телефонах не используем transform, только на десктопе
@@ -1169,7 +1204,53 @@ function loadAdmin() {
   const activeSection = document.querySelector('.admin-section.active');
   if (!isOwner && activeSection && activeSection.id === 'admin-dashboard') { switchAdmin('programs'); }
 }
-function loadSettingsAdmin() { document.getElementById('invite-code').value = inviteCodeSetting; document.getElementById('current-invite-code').textContent = inviteCodeSetting; document.getElementById('hint-invite-code').textContent = inviteCodeSetting; }
+function loadSettingsAdmin() {
+  document.getElementById('invite-code').value = inviteCodeSetting;
+  document.getElementById('current-invite-code').textContent = inviteCodeSetting;
+  document.getElementById('hint-invite-code').textContent = inviteCodeSetting;
+  // Синхронизируем чекбоксы транспорта
+  const map = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
+  Object.entries(map).forEach(([id, val]) => {
+    const cb = document.getElementById('tc-'+id);
+    if (cb) cb.checked = enabledTransports.includes(val);
+    const lbl = document.getElementById('tl-'+id);
+    if (lbl) lbl.classList.toggle('checked', enabledTransports.includes(val));
+  });
+}
+
+function saveTransportSettings() {
+  const map = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
+  enabledTransports = Object.entries(map)
+    .filter(([id]) => { const cb = document.getElementById('tc-'+id); return cb && cb.checked; })
+    .map(([,val]) => val);
+  saveState('enabledTransports', enabledTransports);
+  updateTransportSelects();
+  showToast('Настройки транспорта сохранены');
+  // Обновляем визуал чекбоксов
+  const map2 = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
+  Object.entries(map2).forEach(([id, val]) => {
+    const lbl = document.getElementById('tl-'+id);
+    if (lbl) lbl.classList.toggle('checked', enabledTransports.includes(val));
+  });
+}
+
+function updateTransportSelects() {
+  ['f-transport','m-transport'].forEach(selId => {
+    const sel = document.getElementById(selId);
+    if (!sel) return;
+    const cur = sel.value;
+    const first = sel.options[0]; // 'Любой' or first transport
+    sel.innerHTML = '';
+    // Для фильтра — первый вариант 'Любой'
+    if (selId === 'f-transport') sel.appendChild(first);
+    ALL_TRANSPORTS.filter(t => enabledTransports.includes(t.val)).forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.val; o.textContent = t.emoji + ' ' + t.label;
+      sel.appendChild(o);
+    });
+    if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
+  });
+}
 function saveInviteCode() { const newCode = document.getElementById('invite-code').value.trim(); if (!newCode) { showToast('Код не может быть пустым'); return; } inviteCodeSetting = newCode; saveState('inviteCode', inviteCodeSetting); document.getElementById('current-invite-code').textContent = inviteCodeSetting; document.getElementById('hint-invite-code').textContent = inviteCodeSetting; showToast('Код приглашения обновлён'); }
 function showResetPassword() { const email = prompt('Введите email, указанный при регистрации:'); if (!email) return; const user = users.find(u => u.email === email); if (!user) { showToast('Пользователь с таким email не найден'); return; } const tempCode = Math.floor(100000 + Math.random() * 900000).toString(); alert('Код восстановления: ' + tempCode + '\n(В реальном проекте код придёт на почту ' + email + ')'); const userCode = prompt('Введите полученный код:'); if (userCode !== tempCode) { showToast('Неверный код'); return; } const newPassword = prompt('Введите новый пароль:'); if (!newPassword || newPassword.length < 4) { showToast('Пароль должен быть не менее 4 символов'); return; } user.password = newPassword; saveState('users', users); if (currentUser && currentUser.id === user.id) { currentUser.password = newPassword; } showToast('Пароль успешно изменён!'); }
 function loadAdminStats() { const totalRevenue = purchases.reduce((s,p)=>s+p.price, 0); document.getElementById('stats-grid').innerHTML = '<div class="stat-card"><div class="stat-label">Программ</div><div class="stat-value">' + programs.length + '</div></div><div class="stat-card"><div class="stat-label">Пользователей</div><div class="stat-value">' + users.length + '</div></div><div class="stat-card"><div class="stat-label">Заявок</div><div class="stat-value">' + leads.length + '</div></div><div class="stat-card"><div class="stat-label">Выручка</div><div class="stat-value">' + (totalRevenue/1000).toFixed(0) + 'к ₽</div></div>'; }
@@ -1184,163 +1265,234 @@ function showUserStats(userId) { const u = users.find(x=>x.id===userId); const u
 // ============================================================
 // === МОБИЛЬНАЯ ПАНЕЛЬ АДМИНИСТРАТОРА =========================
 // ============================================================
-let isMobilePanelOpen = false;
-let mobilePanelInitialized = false;
+let isMobPanelOpen = false;
 
-  function toggleMobileAdminPanel() {
-  // Работает только на телефонах
-  if (window.innerWidth > 768) return;
-  
-  if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) {
-    showToast('Доступ запрещён');
-    return;
-  }
-  
-  const panel = document.getElementById('adminMobilePanel');
-  const mobileToggle = document.getElementById('mobile-admin-toggle');
-  if (!panel) return;
-  
-  isMobilePanelOpen = !isMobilePanelOpen;
-  
-  if (isMobilePanelOpen) {
-    panel.classList.add('show');
-    if (mobileToggle) mobileToggle.innerHTML = '✕ ПАНЕЛЬ';
-    if (!mobilePanelInitialized) {
-      initMobileAdminItems();
-      mobilePanelInitialized = true;
-    }
-    updateActiveMobileItem();
-    // Прокручиваем к активному пункту
-    const activeItem = panel.querySelector('.mobile-admin-item.active');
-    if (activeItem) {
-      activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
+// Вычисляем высоту навбара и задаём CSS-переменную
+function updateNavbarHeight() {
+  const nb = document.getElementById('navbar');
+  if (nb) document.documentElement.style.setProperty('--navbar-h', nb.getBoundingClientRect().height + 'px');
+}
+
+// Открыть/закрыть мобильную панель
+function toggleMobileAdminPanel() {
+  if (window.innerWidth > 768) { showPage('admin'); return; }
+  if (!currentUser || !['owner','admin'].includes(currentUser.role)) { showToast('Доступ запрещён'); return; }
+
+  const toggle  = document.getElementById('mobile-admin-toggle');
+  const tabsBar = document.getElementById('adminMobilePanel');
+  const overlay = document.getElementById('mob-admin-overlay');
+
+  isMobPanelOpen = !isMobPanelOpen;
+
+  if (isMobPanelOpen) {
+    updateNavbarHeight();
+    tabsBar.classList.add('show');
+    overlay.classList.add('show');
+    document.body.classList.add('mob-admin-active');
+    if (toggle) { toggle.innerHTML = '✕ ПАНЕЛЬ'; toggle.classList.add('active'); }
+    // Рендерим первый раздел
+    const defaultSection = currentUser.role === 'owner' ? 'dashboard' : 'programs';
+    renderMobSection(defaultSection);
+    updateMobActiveTab(defaultSection);
   } else {
-    panel.classList.remove('show');
-    if (mobileToggle) mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
+    closeMobAdminPanel();
   }
 }
-  
+
+function closeMobAdminPanel() {
+  const toggle  = document.getElementById('mobile-admin-toggle');
+  const tabsBar = document.getElementById('adminMobilePanel');
+  const overlay = document.getElementById('mob-admin-overlay');
+  tabsBar.classList.remove('show');
+  overlay.classList.remove('show');
+  document.body.classList.remove('mob-admin-active');
+  isMobPanelOpen = false;
+  if (toggle) { toggle.innerHTML = '⚙ ПАНЕЛЬ'; toggle.classList.remove('active'); }
+}
+
+// Навигация по разделам в мобильном оверлее
+function switchMobSection(section) {
+  if (section === 'dashboard' && currentUser.role !== 'owner') { showToast('Только для владельца'); return; }
+  renderMobSection(section);
+  updateMobActiveTab(section);
+  // Прокручиваем контент наверх
+  const ov = document.getElementById('mob-admin-overlay');
+  if (ov) ov.scrollTop = 0;
+}
+
+function updateMobActiveTab(section) {
+  document.querySelectorAll('.mobile-admin-item').forEach(el =>
+    el.classList.toggle('active', el.dataset.section === section));
+}
+
+// Рендер контента раздела в мобильный оверлей
+function renderMobSection(section) {
+  const box = document.getElementById('mob-admin-content');
+  if (!box) return;
+  const isOwner = currentUser.role === 'owner';
+  const tIcon = t => t==='поезд'?'🚂':t==='самолёт'?'✈️':t==='корабль'?'🚢':'🚗';
+
+  if (section === 'dashboard' && isOwner) {
+    const rev = purchases.reduce((s,p)=>s+p.price,0);
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:18px;">Дашборд</h2>'
+      + '<div class="stats-grid">'
+      + '<div class="stat-card"><div class="stat-label">Программ</div><div class="stat-value">' + programs.length + '</div></div>'
+      + '<div class="stat-card"><div class="stat-label">Участников</div><div class="stat-value">' + users.length + '</div></div>'
+      + '<div class="stat-card"><div class="stat-label">Заявок</div><div class="stat-value">' + leads.length + '</div></div>'
+      + '<div class="stat-card"><div class="stat-label">Выручка</div><div class="stat-value">' + (rev/1000).toFixed(0) + 'к ₽</div></div>'
+      + '</div>';
+
+  } else if (section === 'programs') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Программы</h2>'
+      + '<button class="btn btn-primary" style="width:100%;margin-bottom:16px;" onclick="openAddProgram()">+ Добавить программу</button>'
+      + programs.map(p =>
+          '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px;display:flex;gap:12px;align-items:center;">'
+          + '<div style="width:44px;height:44px;border-radius:8px;overflow:hidden;background:var(--accent-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;">'
+          + (p.photo ? '<img src="'+p.photo+'" style="width:100%;height:100%;object-fit:cover;">' : '<span>🏔</span>') + '</div>'
+          + '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + p.name + '</div>'
+          + '<div style="font-size:11px;color:var(--text-muted);">' + p.season + ' · ' + p.days + ' дн · ' + p.price.toLocaleString('ru') + ' ₽</div></div>'
+          + '<div style="display:flex;gap:6px;flex-shrink:0;">'
+          + '<button class="btn btn-edit" style="padding:5px 10px;font-size:11px;" onclick="openEditProgram('+p.id+')">✏️</button>'
+          + '<button class="btn btn-danger" style="padding:5px 10px;font-size:11px;" onclick="deleteProgram('+p.id+')">🗑</button>'
+          + '</div></div>'
+        ).join('');
+
+  } else if (section === 'users') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Пользователи</h2>'
+      + users.map(u => {
+          const cnt = purchases.filter(p=>p.userId===u.id).length;
+          return '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px;">'
+            + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
+            + '<strong style="font-size:14px;">' + u.name + '</strong>'
+            + '<span class="tag ' + (u.role==='owner'?'tag-orange':u.role==='admin'?'tag-orange':'tag-green') + '">'
+            + (u.role==='owner'?'Владелец':u.role==='admin'?'Админ':'Участник') + '</span></div>'
+            + '<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">' + u.email + ' · ' + cnt + ' поездок</div>'
+            + (isOwner ? '<select class="filter-select" style="font-size:12px;padding:5px 8px;" onchange="changeUserRole('+u.id+',this.value)">'
+              + '<option value="owner"'+(u.role==='owner'?' selected':'')+'>Владелец</option>'
+              + '<option value="admin"'+(u.role==='admin'?' selected':'')+'>Админ</option>'
+              + '<option value="user"'+(u.role==='user'?' selected':'')+'>Участник</option></select>' : '')
+            + '</div>';
+        }).join('');
+
+  } else if (section === 'leads') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Заявки (' + leads.length + ')</h2>'
+      + (leads.length === 0 ? '<p style="color:var(--text-muted);">Пока нет заявок.</p>'
+        : leads.slice().reverse().map(l =>
+            '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px;">'
+            + '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
+            + '<strong>' + l.name + '</strong><span style="font-size:11px;color:var(--text-muted);">' + l.date + '</span></div>'
+            + '<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">' + l.contact + '</div>'
+            + '<div style="font-size:13px;">' + (l.message||'—') + '</div></div>'
+          ).join(''));
+
+  } else if (section === 'settings') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Настройки</h2>'
+      + '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);margin-bottom:14px;">'
+      + '<div class="form-group"><label>Код приглашения</label>'
+      + '<input type="text" class="form-input" id="mob-invite" value="' + inviteCodeSetting + '"></div>'
+      + '<button class="btn btn-primary btn-sm" onclick="saveMobInvite()">Сохранить код</button></div>'
+      + '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);">'
+      + '<h3 style="font-size:16px;font-weight:500;margin-bottom:12px;">Виды транспорта</h3>'
+      + ALL_TRANSPORTS.map(t =>
+          '<label style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:14px;">'
+          + '<input type="checkbox" style="accent-color:var(--accent);width:17px;height:17px;"'
+          + (enabledTransports.includes(t.val)?' checked':'')
+          + ' onchange="toggleMobTransport(\''+t.val+'\',this.checked)"> '
+          + t.emoji + ' ' + t.label + '</label>'
+        ).join('')
+      + '</div>';
+
+  } else if (section === 'founder') {
+    const f = founderContent;
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Об основателе</h2>'
+      + '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);">'
+      + '<div class="form-group"><label>Имя (заголовок)</label><input class="form-input" id="mob-f-name" value="' + f.name.replace(/\n/g,' ') + '"></div>'
+      + '<div class="form-group"><label>Лет в пути</label><input class="form-input" id="mob-f-years" value="' + f.years + '"></div>'
+      + '<div class="form-group"><label>Абзац 1</label><textarea class="form-textarea" id="mob-f-bio1" style="min-height:80px;">' + f.bio1 + '</textarea></div>'
+      + '<div class="form-group"><label>Абзац 2</label><textarea class="form-textarea" id="mob-f-bio2" style="min-height:80px;">' + f.bio2 + '</textarea></div>'
+      + '<button class="btn btn-primary" style="width:100%;" onclick="saveMobFounder()">Сохранить</button></div>';
+
+  } else if (section === 'howto') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Как мы ездим</h2>'
+      + howCards.map((c,i) =>
+          '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px;">'
+          + '<div class="form-group"><label>Способ ' + (i+1) + ' — Название</label>'
+          + '<input class="form-input" id="mob-how-t-'+i+'" value="' + c.title.replace(/"/g,'&quot;') + '"></div>'
+          + '<div class="form-group"><label>Описание</label>'
+          + '<textarea class="form-textarea" id="mob-how-d-'+i+'" style="min-height:70px;">' + c.desc + '</textarea></div>'
+          + '</div>'
+        ).join('')
+      + '<button class="btn btn-primary" style="width:100%;" onclick="saveMobHowCards()">Сохранить</button>';
+
+  } else if (section === 'contacts') {
+    box.innerHTML = '<h2 style="font-size:24px;font-weight:500;margin-bottom:16px;">Контакты</h2>'
+      + '<div style="background:var(--surface);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);">'
+      + '<div class="form-group"><label>Телефон</label><input class="form-input" id="mob-c-phone" value="' + contactsContent.phone + '"></div>'
+      + '<div class="form-group"><label>Email</label><input class="form-input" id="mob-c-email" value="' + contactsContent.email + '"></div>'
+      + '<div class="form-group"><label>Telegram</label><input class="form-input" id="mob-c-tg" value="' + contactsContent.tg + '"></div>'
+      + '<button class="btn btn-primary" style="width:100%;" onclick="saveMobContacts()">Сохранить</button></div>';
+  }
+}
+
+// Вспомогательные save-функции для мобильной панели
+function saveMobInvite() {
+  const v = (document.getElementById('mob-invite')||{value:''}).value.trim();
+  if (!v) return;
+  inviteCodeSetting = v;
+  saveState('inviteCode', inviteCodeSetting);
+  ['current-invite-code','hint-invite-code'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = v; });
+  const fi = document.getElementById('invite-code'); if (fi) fi.value = v;
+  showToast('Код обновлён ✓');
+}
+function saveMobFounder() {
+  const g = id => (document.getElementById(id)||{value:''}).value;
+  founderContent.name  = g('mob-f-name');
+  founderContent.years = g('mob-f-years');
+  founderContent.bio1  = g('mob-f-bio1');
+  founderContent.bio2  = g('mob-f-bio2');
+  saveState('founderContent', founderContent);
+  applyFounderContent();
+  showToast('Сохранено ✓');
+}
+function saveMobHowCards() {
+  howCards.forEach((c,i) => {
+    const t = document.getElementById('mob-how-t-'+i);
+    const d = document.getElementById('mob-how-d-'+i);
+    if (t) c.title = t.value;
+    if (d) c.desc  = d.value;
+  });
+  saveState('howCards', howCards);
+  renderHowCards();
+  showToast('Сохранено ✓');
+}
+function saveMobContacts() {
+  const g = id => (document.getElementById(id)||{value:''}).value;
+  contactsContent = { phone: g('mob-c-phone'), email: g('mob-c-email'), tg: g('mob-c-tg') };
+  saveState('contactsContent', contactsContent);
+  applyContactsContent();
+  showToast('Контакты обновлены ✓');
+}
+function toggleMobTransport(val, checked) {
+  if (checked) { if (!enabledTransports.includes(val)) enabledTransports.push(val); }
+  else { enabledTransports = enabledTransports.filter(t => t !== val); }
+  saveState('enabledTransports', enabledTransports);
+  updateTransportSelects();
+  showToast('Транспорт обновлён');
+}
+
+// Инициализируем клики по пунктам мобильного меню
 function initMobileAdminItems() {
-  const items = document.querySelectorAll('.mobile-admin-item');
-  items.forEach(item => {
-    item.removeEventListener('click', mobileItemClickHandler);
-    item.addEventListener('click', mobileItemClickHandler);
+  document.querySelectorAll('.mobile-admin-item').forEach(el => {
+    el.addEventListener('click', function() { switchMobSection(this.dataset.section); });
   });
 }
 
-function mobileItemClickHandler(e) {
-  const section = this.dataset.section;
-  if (!section) return;
-  
-  // Закрываем панель после выбора
-  const panel = document.getElementById('adminMobilePanel');
-  const mobileToggle = document.getElementById('mobile-admin-toggle');
-  if (panel) panel.classList.remove('show');
-  isMobilePanelOpen = false;
-  if (mobileToggle && window.innerWidth <= 768) mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
-  
-  // Переключаем раздел в админ-панели
-  if (currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin')) {
-    // Находим соответствующий пункт в боковом меню и активируем его
-    const navItems = document.querySelectorAll('.admin-nav-item');
-    let targetIndex = -1;
-    navItems.forEach((item, idx) => {
-      const onclickAttr = item.getAttribute('onclick');
-      if (onclickAttr && onclickAttr.includes(section)) {
-        targetIndex = idx;
-        item.classList.add('active');
-      } else {
-        item.classList.remove('active');
-      }
-    });
-    
-    // Вызываем переключение раздела
-    switchAdmin(section);
-    
-    // Обновляем активный пункт в мобильной панели
-    updateActiveMobileItem();
-    
-    // Прокручиваем админ-панель к нужному разделу
-    const activeSection = document.getElementById('admin-' + section);
-    if (activeSection) {
-      activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-}
-
-  function updateActiveMobileItem() {
-  // Находим активный раздел в админ-панели
-  const activeSection = document.querySelector('.admin-section.active');
-  if (!activeSection) return;
-  
-  const activeId = activeSection.id;
-  let activeSectionName = '';
-  if (activeId === 'admin-dashboard') activeSectionName = 'dashboard';
-  else if (activeId === 'admin-programs') activeSectionName = 'programs';
-  else if (activeId === 'admin-users') activeSectionName = 'users';
-  else if (activeId === 'admin-leads') activeSectionName = 'leads';
-  else if (activeId === 'admin-settings') activeSectionName = 'settings';
-  else if (activeId === 'admin-founder') activeSectionName = 'founder';
-  else if (activeId === 'admin-howto') activeSectionName = 'howto';
-  else if (activeId === 'admin-contacts') activeSectionName = 'contacts';
-  
-  document.querySelectorAll('.mobile-admin-item').forEach(item => {
-    if (item.dataset.section === activeSectionName) {
-      item.classList.add('active');
-      // Автоматически прокручиваем к активному пункту
-      item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    } else {
-      item.classList.remove('active');
-    }
-  });
-}
-
-// Функция прокрутки мобильной панели
-function scrollMobilePanel(offset) {
-  const panel = document.getElementById('adminMobilePanel');
-  if (panel) {
-    panel.scrollBy({ left: offset, behavior: 'smooth' });
-  }
-}
-
-// Переопределяем showPage для обновления мобильной панели при переключении на админку
-const originalShowPage = showPage;
-showPage = function(page) {
-  originalShowPage(page);
-  if (page === 'admin' && window.innerWidth <= 768) {
-    // Если админка открыта на телефоне, показываем кнопку панели по-другому
-    const adminBtn = document.getElementById('admin-btn');
-    if (adminBtn) adminBtn.style.display = 'inline-flex';
-  } else {
-    // Закрываем мобильную панель при уходе с админки
-    const panel = document.getElementById('adminMobilePanel');
-    if (panel) panel.classList.remove('show');
-    isMobilePanelOpen = false;
-  }
-};
-
-// Добавляем обработчик ресайза
+// При ресайзе закрываем мобильную панель если стало десктопным
 window.addEventListener('resize', function() {
-  if (window.innerWidth > 768) {
-    const panel = document.getElementById('adminMobilePanel');
-    if (panel) panel.classList.remove('show');
-    isMobilePanelOpen = false;
-    // Восстанавливаем текст кнопки на десктопе
-    const adminBtn = document.getElementById('admin-btn');
-    if (adminBtn) adminBtn.innerHTML = '⚙ ПАНЕЛЬ';
-  } else {
-    // На телефонах обновляем текст мобильной кнопки если панель открыта
-    const mobileToggle = document.getElementById('mobile-admin-toggle');
-    if (mobileToggle && isMobilePanelOpen) {
-      mobileToggle.innerHTML = '✕ ПАНЕЛЬ';
-    } else if (mobileToggle) {
-      mobileToggle.innerHTML = '⚙ ПАНЕЛЬ';
-    }
-  }
+  updateNavbarHeight();
+  if (window.innerWidth > 768 && isMobPanelOpen) closeMobAdminPanel();
 });
 
-  
 // ============================================================
 // === CRUD ПРОГРАММ ===========================================
 // ============================================================
@@ -1475,11 +1627,27 @@ function init() {
   initEnterHandlers();
   loadSettingsAdmin();
 
-  // Аватар в навбаре
+  // Аватар внавбаре
   const avatarUploadSmall = document.getElementById('avatar-upload-small');
   if (avatarUploadSmall) avatarUploadSmall.onchange = (e) => updateUserAvatar(e.target.files[0]);
+
+  // Транспорт, высота навбара, мобильное меню
+  updateTransportSelects();
+  updateNavbarHeight();
+  initMobileAdminItems();
 }
 init();
+
+// ============================================================
+// === SERVICE WORKER (PWA) ====================================
+// ============================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =>
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('SW registered'))
+      .catch(e => console.warn('SW registration failed:', e))
+  );
+}
 </script>
 </body>
 </html>
