@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <title>ВПУТЕШЕСТВИЕВМЕСТЕ — Авторские программы Марины Пищальниковой</title>
 <meta name="theme-color" content="#5C8A4E">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -39,7 +39,7 @@
 }
 
 html { overflow-x: hidden; width: 100%; }
-body { overflow-x: hidden; width: 100%; max-width: 100vw; font-family: var(--font-family); background: var(--bg); color: var(--text); line-height: 1.5; font-weight: 400; margin: 0; padding: 0; }
+body { overflow-x: hidden; width: 100%; max-width: 100vw; font-family: var(--font-family); background: var(--bg); color: var(--text); line-height: 1.5; font-weight: 400; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; max-width: 100%; }
 h1, h2, h3, h4 { font-family: var(--font-family); font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; }
 a { color: inherit; text-decoration: none; }
@@ -355,9 +355,113 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
 .back-to-top svg { width: 24px; height: 24px; fill: white; }
 
 /* ===== АДАПТИВ ===== */
-@media (max-width: 1024px) { .container { padding: 0 20px; } .about-grid, .contact-wrap, .footer-grid { gap: 40px; } .programs-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; } }
-@media (max-width: 768px) { .container { padding: 0 16px; } .navbar-inner { flex-wrap: wrap; gap: 10px; padding: 12px 16px; } .logo { font-size: 16px; } .nav-links { display: none; } .hero { min-height: auto; padding-top: 100px; padding-bottom: 60px; } .hero h1 { font-size: clamp(36px, 8vw, 48px); } .hero-sub { font-size: 14px; } .hero-actions { flex-direction: column; gap: 12px; } .hero-actions .btn { width: 100%; justify-content: center; } .hero-stats { flex-wrap: wrap; gap: 24px; margin-top: 40px; padding-top: 30px; } .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; } .about-photo-wrap { max-width: 280px; margin: 0 auto; } .section { padding: 60px 0; } .section-title { font-size: 32px; } .how-grid { grid-template-columns: 1fr; gap: 16px; } .programs-grid { grid-template-columns: 1fr; } .filter-bar { padding: 16px; } .filter-row { grid-template-columns: 1fr; gap: 12px; } .filter-tags { gap: 6px; } .filter-tag { padding: 4px 10px; font-size: 11px; } .carousel-item { flex: 0 0 calc(85% - 12px); } .steps { flex-direction: column; gap: 20px; } .steps::before { display: none; } .step { text-align: left; display: flex; gap: 15px; align-items: flex-start; padding: 0; } .step-num { margin: 0; flex-shrink: 0; } .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; } .footer-brand p { max-width: 100%; } .footer-bottom { flex-direction: column; text-align: center; } .admin-layout { grid-template-columns: 1fr; } .admin-sidebar { display: none; } .admin-main { padding: 20px; } .admin-page-title { font-size: 28px; } .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .stat-value { font-size: 28px; } .admin-table { font-size: 11px; } .admin-table th, .admin-table td { padding: 8px 10px; } .td-actions { flex-direction: column; gap: 5px; } .modal { padding: 20px; } .modal-title { font-size: 22px; } .modal-grid { grid-template-columns: 1fr; } .program-detail-grid { grid-template-columns: 1fr; } .program-detail-title { font-size: 32px; } .booking-card { position: static; margin-top: 20px; } .profile-grid { grid-template-columns: 1fr; } .profile-card { max-width: 300px; margin: 0 auto; } .dashboard-tabs { width: 100%; justify-content: center; } .tab-btn { padding: 6px 12px; font-size: 12px; } .trip-item { flex-direction: column; text-align: center; } .revenue-grid { grid-template-columns: repeat(6, 1fr); } .rev-month { font-size: 9px; } .rev-amount { font-size: 9px; } .auth-box { padding: 30px 24px; margin: 0 16px; } .auth-logo p { font-size: 22px; } .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; } .back-to-top svg { width: 20px; height: 20px; } }
-@media (max-width: 480px) { .container { padding: 0 12px; } .hero h1 { font-size: 32px; } .section-title { font-size: 28px; } .about-value { gap: 10px; } .about-value-icon { width: 32px; height: 32px; font-size: 14px; } .stats-grid { grid-template-columns: 1fr; } .revenue-grid { grid-template-columns: repeat(4, 1fr); } .program-title { font-size: 18px; } .program-price { font-size: 20px; } .carousel-item { flex: 0 0 calc(95% - 12px); } .admin-main { padding: 16px; } }
+/* ===== АДАПТИВ (только планшеты и шире) ===== */
+@media (max-width: 1024px) {
+  .container { padding: 0 20px; }
+  .about-grid, .contact-wrap, .footer-grid { gap: 40px; }
+  .programs-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+}
+
+/* ===== МОБИЛЬНЫЕ УСТРОЙСТВА (≤ 768px) ===== */
+@media (max-width: 768px) {
+  /* Базовый контейнер */
+  body { overflow-x: hidden; width: 100%; }
+  .container { padding: 0 16px; width: 100%; overflow-x: hidden; }
+
+  /* Навигация */
+  .navbar-inner { flex-wrap: wrap; gap: 10px; padding: 12px 16px; }
+  .logo { font-size: 16px; }
+  .nav-links { display: none; }
+
+  /* Hero */
+  .hero { min-height: auto; padding-top: 100px; padding-bottom: 60px; }
+  .hero h1 { font-size: clamp(32px, 8vw, 48px); }
+  .hero-sub { font-size: 14px; }
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-stats { flex-wrap: wrap; gap: 24px; margin-top: 40px; padding-top: 30px; }
+
+  /* Секции */
+  .section { padding: 60px 0; }
+  .section-title { font-size: 28px; }
+
+  /* О создателе */
+  .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .about-photo-wrap { max-width: 280px; margin: 0 auto; }
+  .about-value { gap: 10px; }
+  .about-value-icon { width: 32px; height: 32px; font-size: 14px; }
+
+  /* Как мы путешествуем */
+  .how-grid { grid-template-columns: 1fr; gap: 16px; }
+  .steps { flex-direction: column; gap: 20px; }
+  .steps::before { display: none; }
+  .step { text-align: left; display: flex; gap: 15px; align-items: flex-start; padding: 0; }
+  .step-num { margin: 0; flex-shrink: 0; }
+
+  /* Программы и фильтр */
+  .programs-grid { grid-template-columns: 1fr; }
+  .program-title { font-size: 18px; }
+  .program-price { font-size: 20px; }
+  .filter-bar { padding: 16px; }
+  .filter-row { grid-template-columns: 1fr; gap: 12px; }
+  .filter-tags { gap: 6px; }
+  .filter-tag { padding: 4px 10px; font-size: 11px; }
+
+  /* Карусель — свайп вместо кнопок */
+  .carousel-track-outer { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .carousel-track { display: flex; gap: 16px; scroll-snap-type: x mandatory; transform: none !important; }
+  .carousel-item { flex: 0 0 85%; scroll-snap-align: start; }
+  .carousel-btns { display: none; }
+  .mobile-scroll-btn { display: flex; }
+
+  /* Футер */
+  .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+  .footer-brand p { max-width: 100%; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+
+  /* Административная панель */
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar { display: none; }
+  .admin-main { padding: 16px; }
+  .admin-page-title { font-size: 28px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-value { font-size: 28px; }
+  .admin-table { font-size: 11px; }
+  .admin-table th, .admin-table td { padding: 8px 10px; }
+  .td-actions { flex-direction: column; gap: 5px; }
+  .revenue-grid { grid-template-columns: repeat(6, 1fr); }
+  .rev-month { font-size: 9px; }
+  .rev-amount { font-size: 9px; }
+
+  /* Модальные окна */
+  .modal { padding: 20px; }
+  .modal-title { font-size: 22px; }
+  .modal-grid { grid-template-columns: 1fr; }
+
+  /* Детальная страница */
+  .program-detail-grid { grid-template-columns: 1fr; }
+  .program-detail-title { font-size: 32px; }
+  .booking-card { position: static; margin-top: 20px; }
+
+  /* Личный кабинет */
+  .profile-grid { grid-template-columns: 1fr; }
+  .profile-card { max-width: 300px; margin: 0 auto; }
+  .dashboard-tabs { width: 100%; justify-content: center; }
+  .tab-btn { padding: 6px 12px; font-size: 12px; }
+  .trip-item { flex-direction: column; text-align: center; }
+
+  /* Авторизация */
+  .auth-box { padding: 30px 24px; margin: 0 16px; }
+  .auth-logo p { font-size: 22px; }
+
+  /* Кнопка наверх */
+  .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+  .back-to-top svg { width: 20px; height: 20px; }
+
+  /* Мобильная кнопка панели */
+  .mobile-admin-toggle { display: inline-flex !important; }
+  .nav-auth .btn-primary.btn-sm:not(.mobile-admin-toggle) { display: none; }
+}
 
 /* ===== МОБИЛЬНАЯ ПАНЕЛЬ АДМИНИСТРАТОРА ===== */
 .admin-mobile-panel {
@@ -379,11 +483,7 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   gap: 8px;
   flex-wrap: nowrap;
 }
-
-.admin-mobile-panel.show {
-  display: flex;
-}
-
+.admin-mobile-panel.show { display: flex; }
 .admin-mobile-panel .mobile-admin-item {
   display: inline-flex;
   align-items: center;
@@ -399,19 +499,10 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   transition: all 0.2s;
   flex-shrink: 0;
 }
+.admin-mobile-panel .mobile-admin-item.active { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent); }
+.admin-mobile-panel .mobile-admin-item:hover { background: var(--accent-light); color: var(--accent); }
 
-.admin-mobile-panel .mobile-admin-item.active {
-  background: var(--accent-light);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-}
-
-.admin-mobile-panel .mobile-admin-item:hover {
-  background: var(--accent-light);
-  color: var(--accent);
-}
-
-/* Кнопка открытия/закрытия мобильной панели (только для телефонов) */
+/* Кнопка открытия/закрытия мобильной панели */
 .mobile-admin-toggle {
   display: none !important;
   background: var(--accent2);
@@ -426,63 +517,6 @@ footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 56px 0
   gap: 6px;
   white-space: nowrap;
 }
-
-/* Стрелки прокрутки для мобильной панели */
-
-
-@media (max-width: 768px) {
-  body {
-    overflow-x: hidden;
-    width: 100%;
-  }
-  
-  .container {
-    width: 100%;
-    padding: 0 16px;
-    overflow-x: hidden;
-  }
-  
-  /* Исправление карусели */
-  .carousel-track-outer {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-   
-    .mobile-scroll-btn {
-    display: flex;
-  }
-  .mobile-admin-toggle {
-    display: inline-flex !important;
-  }
-  /* Скрываем стандартную кнопку панели на телефонах, используем новую */
-  .nav-auth .btn-primary.btn-sm:not(.mobile-admin-toggle) {
-    display: none;
-  }
-
-  .carousel-track-outer {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .carousel-track {
-    display: flex;
-    gap: 16px;
-    scroll-snap-type: x mandatory;
-    transform: none !important; /* Отключаем transform для свайпа */
-  }
-  
-  .carousel-item {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
-  }
-  
-  /* Скрываем кнопки карусели на телефонах (работает свайп) */
-  .carousel-btns {
-    display: none;
-  }
-}  
 
 /* ===== МОБИЛЬНЫЙ ОВЕРЛЕЙ ПАНЕЛИ УПРАВЛЕНИЯ ===== */
 #mob-admin-overlay {
@@ -594,12 +628,18 @@ body.mob-admin-active #page-dashboard { display: none !important; }
 </div></div></div></div></div>
 
 <!-- ===== АДМИНИСТРАТИВНАЯ ПАНЕЛЬ ===== -->
-<div id="page-admin" class="hidden admin-panel"><div class="admin-layout"><aside class="admin-sidebar"><div class="admin-sidebar-logo">⚙ Управление</div><div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div><div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div><div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div><div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div><div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div><div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div><div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы ездим</div><div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div><div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;"><span class="admin-nav-icon">🏠</span> На сайт</div></aside><main class="admin-main"><div class="admin-section active" id="admin-dashboard"><div class="admin-page-title">Дашборд</div><div class="admin-page-sub">Сводная статистика по сайту</div><div class="stats-grid" id="stats-grid"></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;"><h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3><div class="revenue-grid" id="revenue-chart"></div></div></div><div class="admin-section" id="admin-programs"><div class="admin-page-title">Программы</div><div class="admin-page-sub">Управление маршрутами путешествий</div><div class="admin-bar-top"><button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr></thead><tbody id="programs-tbody"></tbody></table></div></div><div class="admin-section" id="admin-users"><div class="admin-page-title">Пользователи</div><div class="admin-page-sub">Список зарегистрированных участников</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr></thead><tbody id="users-tbody"></tbody></table></div></div><div class="admin-section" id="admin-leads"><div class="admin-page-title">Заявки</div><div class="admin-page-sub">Входящие запросы с сайта</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th></tr></thead><tbody id="leads-tbody"></tbody></table></div></div><div class="admin-section" id="admin-settings"><div class="admin-page-title">Настройки сайта</div><div class="admin-page-sub">Код приглашения и виды транспорта</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px;"><div class="form-group"><label>Код приглашения для регистрации</label><input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026"><button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button><p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p></div></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><h3 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:8px;">Виды транспорта</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">Выберите, какие виды транспорта отображаются в фильтре и при создании программ.</p><div style="display:flex;flex-direction:column;gap:10px;"><label class="checkbox-label" id="tl-train"><input type="checkbox" id="tc-train" onchange="saveTransportSettings()"> 🚂 Поезд</label><label class="checkbox-label" id="tl-plane"><input type="checkbox" id="tc-plane" onchange="saveTransportSettings()"> ✈️ Самолёт</label><label class="checkbox-label" id="tl-car"><input type="checkbox" id="tc-car" onchange="saveTransportSettings()"> 🚗 Авто</label><label class="checkbox-label" id="tl-ship"><input type="checkbox" id="tc-ship" onchange="saveTransportSettings()"> 🚢 Корабль / паром</label></div></div></div><div class="admin-section" id="admin-founder"><div class="admin-page-title">Об основателе клуба</div><div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Имя (заголовок)</label><input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова"></div><div class="form-group"><label>Годы опыта (число с +)</label><input type="text" class="form-input" id="founder-admin-years" placeholder="7+"></div><div class="form-group"><label>Фото основателя (URL или загрузите)</label><div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="founder-photo-input" accept="image/*" style="display:none"></div><img id="founder-photo-preview" class="photo-preview" style="display:none; max-width:200px;"><input type="hidden" id="founder-photo-url" value=""></div><div class="form-group"><label>Основной текст (первый абзац)</label><textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea></div><div class="form-group"><label>Второй абзац</label><textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;"><div><div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div><div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div></div><div><div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div><div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div></div><div><div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div><div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div></div></div><button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button></div></div><div class="admin-section" id="admin-howto"><div class="admin-page-title">Как мы путешествуем</div><div class="admin-page-sub">Редактирование карточек способов перемещения (фото 80x80px)</div><div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div><button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button></div><div class="admin-section" id="admin-contacts"><div class="admin-page-title">Контактная информация</div><div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Телефон</label><input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx"></div><div class="form-group"><label>Email</label><input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru"></div><div class="form-group"><label>Telegram</label><input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together"></div><button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button></div></div></main></div></div>
+<div id="page-admin" class="hidden admin-panel"><div class="admin-layout"><aside class="admin-sidebar"><div class="admin-sidebar-logo">⚙ Управление</div><div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div><div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div><div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div><div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div><div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div><div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div><div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы ездим</div><div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div><div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;"><span class="admin-nav-icon">🏠</span> На сайт</div></aside><main class="admin-main"><div class="admin-section active" id="admin-dashboard"><div class="admin-page-title">Дашборд</div><div class="admin-page-sub">Сводная статистика по сайту</div><div class="stats-grid" id="stats-grid"></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;"><h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3><div class="revenue-grid" id="revenue-chart"></div></div></div><div class="admin-section" id="admin-programs"><div class="admin-page-title">Программы</div><div class="admin-page-sub">Управление маршрутами путешествий</div><div class="admin-bar-top"><button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr></thead><tbody id="programs-tbody"></tbody></table></div></div><div class="admin-section" id="admin-users"><div class="admin-page-title">Пользователи</div><div class="admin-page-sub">Список зарегистрированных участников</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr></thead><tbody id="users-tbody"></tbody></table></div></div><div class="admin-section" id="admin-leads"><div class="admin-page-title">Заявки</div><div class="admin-page-sub">Входящие запросы с сайта</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th><th>Действия</th></tr></thead><tbody id="leads-tbody"></tbody></table></div></div><div class="admin-section" id="admin-settings"><div class="admin-page-title">Настройки сайта</div><div class="admin-page-sub">Код приглашения и виды транспорта</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px;"><div class="form-group"><label>Код приглашения для регистрации</label><input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026"><button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button><p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p></div></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><h3 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:8px;">Виды транспорта</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">Управляйте видами транспорта для фильтра и программ. Иконки (80×80 px) хранятся на GitHub.</p><div id="transport-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;"></div><div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);"><h4 style="font-size:14px;font-weight:600;margin-bottom:12px;">+ Добавить новый вид транспорта</h4><div style="display:grid;grid-template-columns:60px 1fr 1fr;gap:10px;align-items:flex-end;"><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Эмодзи</label><input type="text" class="form-input" id="new-transport-emoji" placeholder="🚁" style="text-align:center;font-size:20px;"></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Название</label><input type="text" class="form-input" id="new-transport-label" placeholder="Вертолёт"></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Значение (lat.)</label><input type="text" class="form-input" id="new-transport-val" placeholder="вертолёт"></div></div><div style="margin-top:10px;"><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Путь к иконке на GitHub (необязательно)</label><input type="text" class="form-input" id="new-transport-icon" placeholder="icons/transport/helicopter.png"></div><button class="btn btn-primary" style="margin-top:12px;" onclick="addTransportType()">Добавить вид транспорта</button></div></div></div><div class="admin-section" id="admin-founder"><div class="admin-page-title">Об основателе клуба</div><div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Имя (заголовок)</label><input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова"></div><div class="form-group"><label>Годы опыта (число с +)</label><input type="text" class="form-input" id="founder-admin-years" placeholder="7+"></div><div class="form-group"><label>Фото основателя (URL или загрузите)</label><div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="founder-photo-input" accept="image/*" style="display:none"></div><img id="founder-photo-preview" class="photo-preview" style="display:none; max-width:200px;"><input type="hidden" id="founder-photo-url" value=""></div><div class="form-group"><label>Основной текст (первый абзац)</label><textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea></div><div class="form-group"><label>Второй абзац</label><textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;"><div><div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div><div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div></div><div><div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div><div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div></div><div><div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div><div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div></div></div><button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button></div></div><div class="admin-section" id="admin-howto"><div class="admin-page-title">Как мы путешествуем</div><div class="admin-page-sub">Редактирование карточек способов перемещения (фото 80x80px)</div><div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div><button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button></div><div class="admin-section" id="admin-contacts"><div class="admin-page-title">Контактная информация</div><div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Телефон</label><input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx"></div><div class="form-group"><label>Email</label><input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru"></div><div class="form-group"><label>Telegram</label><input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together"></div><button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button></div></div></main></div></div>
 
 <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
 <div class="modal-overlay" id="program-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="modal-program-title">Добавить программу</h2><button class="modal-close" onclick="closeModal('program-modal')">✕</button></div><div class="modal-grid"><div class="form-group full"><label>Фото программы</label><div class="photo-upload-area" onclick="document.getElementById('program-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="program-photo-input" accept="image/*" style="display:none" onchange="handleProgramPhotoUpload(event)"></div><img id="program-photo-preview" class="photo-preview" style="display:none;"><input type="hidden" id="m-photo" value=""></div><div class="form-group full"><label>Название программы</label><input type="text" class="form-input" id="m-name" placeholder="Алтай: путь к Белухе"></div><div class="form-group"><label>Сезон</label><select class="filter-select" id="m-season"><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="form-group"><label>Транспорт</label><select class="filter-select" id="m-transport"><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option><option value="корабль">Корабль / паром</option></select></div><div class="form-group"><label>Длительность (дней)</label><input type="number" class="form-input" id="m-days" placeholder="7"></div><div class="form-group"><label>Макс. участников</label><input type="number" class="form-input" id="m-max-people" placeholder="10"></div><div class="form-group"><label>Цена (₽)</label><input type="number" class="form-input" id="m-price" placeholder="65000"></div><div class="form-group"><label>Страна/регион</label><input type="text" class="form-input" id="m-country" placeholder="Россия, Алтай"></div><div class="form-group full"><label>Краткое описание</label><input type="text" class="form-input" id="m-short-desc" placeholder="Суть программы одним предложением"></div><div class="form-group full"><label>Полное описание</label><textarea class="form-textarea" id="m-full-desc" placeholder="Подробный рассказ о маршруте..."></textarea></div><div class="form-group full"><label>Теги (через запятую)</label><input type="text" class="form-input" id="m-tags" placeholder="горы, лес, активный"></div><div class="form-group full"><label>Что включено (каждый пункт с новой строки)</label><textarea class="form-textarea" id="m-includes" placeholder="Трансфер из аэропорта&#10;Проживание в гестхаусах&#10;Все завтраки и ужины"></textarea></div><div class="form-group full"><label class="checkbox-label" id="featured-label" onclick="toggleFeaturedLabel()"><input type="checkbox" id="m-featured"> ⭐ Показывать на главной странице (карусель «Избранные»)</label></div></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px;"><button class="btn btn-outline" onclick="closeModal('program-modal')">Отмена</button><button class="btn btn-primary" id="save-program-btn" onclick="saveProgram()">Сохранить программу</button></div></div></div>
 <div class="modal-overlay" id="user-stats-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title">Статистика участника</h2><button class="modal-close" onclick="closeModal('user-stats-modal')">✕</button></div><div id="user-stats-content"></div></div></div>
 <div class="modal-overlay" id="revenue-detail-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="revenue-modal-title">Детали выручки</h2><button class="modal-close" onclick="closeModal('revenue-detail-modal')">✕</button></div><div id="revenue-detail-content"></div></div></div>
+
+<!-- Модальное окно заявки -->
+<div class="modal-overlay" id="lead-modal"><div class="modal" style="max-width:500px;"><div class="modal-header"><h2 class="modal-title">Заявка</h2><button class="modal-close" onclick="closeModal('lead-modal')">✕</button></div><div id="lead-modal-content"></div></div></div>
+
+<!-- Модальное окно редактирования пользователя -->
+<div class="modal-overlay" id="user-edit-modal"><div class="modal" style="max-width:480px;"><div class="modal-header"><h2 class="modal-title">Редактировать участника</h2><button class="modal-close" onclick="closeModal('user-edit-modal')">✕</button></div><div id="user-edit-content"></div></div></div>
 
 <!-- ===== ФОРМА ВХОДА / РЕГИСТРАЦИИ ===== -->
 <div class="auth-overlay" id="auth-overlay">
@@ -779,6 +819,9 @@ const ALL_TRANSPORTS = [
   { val:'авто',    emoji:'🚗', label:'Авто' },
   { val:'корабль', emoji:'🚢', label:'Корабль / паром' },
 ];
+// Добавляем пользовательские виды транспорта
+const customTransports = loadState('customTransports', []);
+customTransports.forEach(t => { if (!ALL_TRANSPORTS.find(x => x.val === t.val)) ALL_TRANSPORTS.push(t); });
 function tIcon(t) { return t==='поезд'?'🚂':t==='самолёт'?'✈️':t==='корабль'?'🚢':'🚗'; }
 
 const defaultFounderContent = { name: "Марина\nПищальникова", years: "7+", photo: "", bio1: "Я верю, что путешествие — это не набор достопримечательностей, а погружение в другую жизнь.", bio2: "Каждая программа рождается из личного опыта: я сама прошла этот путь.", val1title: "Авторские маршруты", val1text: "Каждая программа создана лично мной.", val2title: "Небольшие группы", val2text: "Максимум 8–12 человек.", val3title: "Живое сообщество", val3text: "После поездки вы остаётесь частью нашего круга." };
@@ -1208,30 +1251,73 @@ function loadSettingsAdmin() {
   document.getElementById('invite-code').value = inviteCodeSetting;
   document.getElementById('current-invite-code').textContent = inviteCodeSetting;
   document.getElementById('hint-invite-code').textContent = inviteCodeSetting;
-  // Синхронизируем чекбоксы транспорта
-  const map = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
-  Object.entries(map).forEach(([id, val]) => {
-    const cb = document.getElementById('tc-'+id);
-    if (cb) cb.checked = enabledTransports.includes(val);
-    const lbl = document.getElementById('tl-'+id);
-    if (lbl) lbl.classList.toggle('checked', enabledTransports.includes(val));
-  });
+  renderTransportList();
 }
 
-function saveTransportSettings() {
-  const map = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
-  enabledTransports = Object.entries(map)
-    .filter(([id]) => { const cb = document.getElementById('tc-'+id); return cb && cb.checked; })
-    .map(([,val]) => val);
+function renderTransportList() {
+  const el = document.getElementById('transport-list');
+  if (!el) return;
+  el.innerHTML = ALL_TRANSPORTS.map((t, i) => {
+    const enabled = enabledTransports.includes(t.val);
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border);">'
+      + '<label style="display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;">'
+      + '<input type="checkbox" style="accent-color:var(--accent);width:17px;height:17px;"' + (enabled?' checked':'')
+      + ' onchange="toggleTransportEnabled(\'' + t.val + '\',this.checked)">'
+      + (t.icon ? '<img src="' + t.icon + '" style="width:30px;height:30px;object-fit:cover;border-radius:6px;" onerror="this.style.display=\'none\'">' : '')
+      + '<span style="font-size:20px;">' + t.emoji + '</span>'
+      + '<span style="font-weight:500;">' + t.label + '</span>'
+      + '<span style="font-size:11px;color:var(--text-muted);margin-left:4px;">(' + t.val + ')</span>'
+      + '</label>'
+      + (i >= 4 ? '<button class="btn btn-danger" style="padding:5px 10px;font-size:11px;" onclick="removeTransportType(\'' + t.val + '\')">✕</button>' : '')
+      + '</div>';
+  }).join('');
+}
+
+function toggleTransportEnabled(val, checked) {
+  if (checked) { if (!enabledTransports.includes(val)) enabledTransports.push(val); }
+  else { enabledTransports = enabledTransports.filter(t => t !== val); }
   saveState('enabledTransports', enabledTransports);
   updateTransportSelects();
   showToast('Настройки транспорта сохранены');
-  // Обновляем визуал чекбоксов
-  const map2 = { train:'поезд', plane:'самолёт', car:'авто', ship:'корабль' };
-  Object.entries(map2).forEach(([id, val]) => {
-    const lbl = document.getElementById('tl-'+id);
-    if (lbl) lbl.classList.toggle('checked', enabledTransports.includes(val));
-  });
+}
+
+function addTransportType() {
+  const emoji = (document.getElementById('new-transport-emoji').value.trim()) || '🚌';
+  const label = document.getElementById('new-transport-label').value.trim();
+  const val   = document.getElementById('new-transport-val').value.trim().toLowerCase();
+  const icon  = document.getElementById('new-transport-icon').value.trim();
+  if (!label || !val) { showToast('Укажите название и значение'); return; }
+  if (ALL_TRANSPORTS.find(t => t.val === val)) { showToast('Такой вид транспорта уже есть'); return; }
+  ALL_TRANSPORTS.push({ val, emoji, label, icon: icon || null });
+  enabledTransports.push(val);
+  saveState('enabledTransports', enabledTransports);
+  saveState('customTransports', ALL_TRANSPORTS.slice(4)); // сохраняем добавленные (первые 4 — базовые)
+  updateTransportSelects();
+  renderTransportList();
+  document.getElementById('new-transport-emoji').value = '';
+  document.getElementById('new-transport-label').value = '';
+  document.getElementById('new-transport-val').value = '';
+  document.getElementById('new-transport-icon').value = '';
+  showToast('Вид транспорта добавлен ✓');
+}
+
+function removeTransportType(val) {
+  if (!confirm('Удалить вид транспорта «' + val + '»?')) return;
+  const idx = ALL_TRANSPORTS.findIndex(t => t.val === val);
+  if (idx < 4) { showToast('Базовые виды транспорта нельзя удалить'); return; }
+  ALL_TRANSPORTS.splice(idx, 1);
+  enabledTransports = enabledTransports.filter(t => t !== val);
+  saveState('enabledTransports', enabledTransports);
+  saveState('customTransports', ALL_TRANSPORTS.slice(4));
+  updateTransportSelects();
+  renderTransportList();
+  showToast('Вид транспорта удалён');
+}
+
+function saveTransportSettings() {
+  saveState('enabledTransports', enabledTransports);
+  updateTransportSelects();
+  showToast('Настройки транспорта сохранены');
 }
 
 function updateTransportSelects() {
@@ -1255,10 +1341,153 @@ function saveInviteCode() { const newCode = document.getElementById('invite-code
 function showResetPassword() { const email = prompt('Введите email, указанный при регистрации:'); if (!email) return; const user = users.find(u => u.email === email); if (!user) { showToast('Пользователь с таким email не найден'); return; } const tempCode = Math.floor(100000 + Math.random() * 900000).toString(); alert('Код восстановления: ' + tempCode + '\n(В реальном проекте код придёт на почту ' + email + ')'); const userCode = prompt('Введите полученный код:'); if (userCode !== tempCode) { showToast('Неверный код'); return; } const newPassword = prompt('Введите новый пароль:'); if (!newPassword || newPassword.length < 4) { showToast('Пароль должен быть не менее 4 символов'); return; } user.password = newPassword; saveState('users', users); if (currentUser && currentUser.id === user.id) { currentUser.password = newPassword; } showToast('Пароль успешно изменён!'); }
 function loadAdminStats() { const totalRevenue = purchases.reduce((s,p)=>s+p.price, 0); document.getElementById('stats-grid').innerHTML = '<div class="stat-card"><div class="stat-label">Программ</div><div class="stat-value">' + programs.length + '</div></div><div class="stat-card"><div class="stat-label">Пользователей</div><div class="stat-value">' + users.length + '</div></div><div class="stat-card"><div class="stat-label">Заявок</div><div class="stat-value">' + leads.length + '</div></div><div class="stat-card"><div class="stat-label">Выручка</div><div class="stat-value">' + (totalRevenue/1000).toFixed(0) + 'к ₽</div></div>'; }
 function loadAdminPrograms() { document.getElementById('programs-tbody').innerHTML = programs.map(p => '<tr><td style="width:50px;"><div style="width:40px;height:40px;border-radius:8px;overflow:hidden;background:var(--accent-light);display:flex;align-items:center;justify-content:center;">' + (p.photo ? '<img src="' + p.photo + '" style="width:100%;height:100%;object-fit:cover;">' : '<span>🏔</span>') + '</div></td><td><strong>' + p.name + '</strong></td><td><span class="tag tag-green">' + p.season + '</span></td><td>' + p.transport + '</td><td>' + p.days + '</td><td style="font-weight:600;">' + p.price.toLocaleString('ru') + ' ₽</td><td class="td-actions"><button class="btn btn-edit" onclick="openEditProgram(' + p.id + ')">Изменить</button><button class="btn btn-danger" onclick="deleteProgram(' + p.id + ')">Удалить</button></td></tr>').join(''); }
-function loadAdminUsers(isOwner) { document.getElementById('users-tbody').innerHTML = users.map(u => { const count = purchases.filter(p=>p.userId===u.id).length; return '<tr><td><strong>' + u.name + '</strong></td><td style="color:var(--text-muted);">' + u.username + '</td><td>' + (isOwner ? '<select class="filter-select" style="padding:5px 8px;font-size:12px;" onchange="changeUserRole(' + u.id + ', this.value)"><option value="owner"' + (u.role==='owner'?' selected':'') + '>Владелец</option><option value="admin"' + (u.role==='admin'?' selected':'') + '>Админ</option><option value="user"' + (u.role==='user'?' selected':'') + '>Пользователь</option></select>' : '<span class="tag ' + (u.role==='owner'?'tag-orange':'tag-green') + '">' + (u.role==='owner'?'Владелец':u.role==='admin'?'Админ':'Пользователь') + '</span>') + '</td><td>' + count + '</td><td><input type="number" class="filter-input" style="width:70px; padding:6px;" value="' + (u.discount || 0) + '" onchange="updateUserDiscount(' + u.id + ', this.value)"></td><td class="td-actions"><button class="btn btn-outline btn-sm" onclick="showUserStats(' + u.id + ')">Статистика</button></td></tr>'; }).join(''); }
+function loadAdminUsers(isOwner) {
+  document.getElementById('users-tbody').innerHTML = users.map(u => {
+    const count = purchases.filter(p => p.userId === u.id).length;
+    return '<tr>'
+      + '<td><strong>' + u.name + '</strong></td>'
+      + '<td style="color:var(--text-muted);">' + u.username + '</td>'
+      + '<td>' + (isOwner
+        ? '<select class="filter-select" style="padding:5px 8px;font-size:12px;" onchange="changeUserRole(' + u.id + ', this.value)">'
+          + '<option value="owner"' + (u.role==='owner'?' selected':'') + '>Владелец</option>'
+          + '<option value="admin"' + (u.role==='admin'?' selected':'') + '>Админ</option>'
+          + '<option value="user"' + (u.role==='user'?' selected':'') + '>Участник</option>'
+          + '</select>'
+        : '<span class="tag ' + (u.role==='owner'?'tag-orange':'tag-green') + '">'
+          + (u.role==='owner'?'Владелец':u.role==='admin'?'Админ':'Участник') + '</span>') + '</td>'
+      + '<td>' + count + '</td>'
+      + '<td><input type="number" class="filter-input" style="width:70px;padding:6px;" value="' + (u.discount||0) + '" onchange="updateUserDiscount(' + u.id + ', this.value)"></td>'
+      + '<td class="td-actions">'
+      + '<button class="btn btn-outline btn-sm" onclick="showUserStats(' + u.id + ')">📊 Стат.</button>'
+      + (isOwner ? '<button class="btn btn-edit" onclick="openUserEdit(' + u.id + ')">✏️ Изм.</button>' : '')
+      + (isOwner && currentUser.id !== u.id ? '<button class="btn btn-danger" onclick="deleteUser(' + u.id + ')">🗑</button>' : '')
+      + '</td></tr>';
+  }).join('');
+}
+
+function openUserEdit(userId) {
+  const u = users.find(x => x.id === userId);
+  if (!u) return;
+  document.getElementById('user-edit-content').innerHTML =
+    '<div class="form-group"><label>Имя</label><input type="text" class="form-input" id="ue-name" value="' + u.name + '"></div>'
+    + '<div class="form-group"><label>Email</label><input type="email" class="form-input" id="ue-email" value="' + u.email + '"></div>'
+    + '<div class="form-group"><label>Логин</label><input type="text" class="form-input" id="ue-username" value="' + u.username + '"></div>'
+    + '<div class="form-group"><label>Новый пароль (оставьте пустым, чтобы не менять)</label><input type="password" class="form-input" id="ue-password" placeholder="••••••"></div>'
+    + '<div class="form-group"><label>Скидка (%)</label><input type="number" class="form-input" id="ue-discount" value="' + (u.discount||0) + '" min="0" max="100"></div>'
+    + '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">'
+    + '<button class="btn btn-outline" onclick="closeModal(\'user-edit-modal\')">Отмена</button>'
+    + '<button class="btn btn-primary" onclick="saveUserEdit(' + userId + ')">Сохранить</button>'
+    + '</div>';
+  openModal('user-edit-modal');
+}
+
+function saveUserEdit(userId) {
+  const u = users.find(x => x.id === userId);
+  if (!u) return;
+  const newUsername = document.getElementById('ue-username').value.trim();
+  if (newUsername !== u.username && users.find(x => x.username === newUsername)) {
+    showToast('Логин уже занят'); return;
+  }
+  u.name     = document.getElementById('ue-name').value.trim() || u.name;
+  u.email    = document.getElementById('ue-email').value.trim();
+  u.username = newUsername || u.username;
+  u.discount = parseInt(document.getElementById('ue-discount').value) || 0;
+  const newPwd = document.getElementById('ue-password').value;
+  if (newPwd && newPwd.length >= 4) u.password = newPwd;
+  if (currentUser && currentUser.id === userId) currentUser = { ...currentUser, ...u };
+  saveState('users', users);
+  closeModal('user-edit-modal');
+  loadAdminUsers(currentUser.role === 'owner');
+  updateNavForUser();
+  showToast('Пользователь обновлён ✓');
+}
+
+function deleteUser(userId) {
+  const u = users.find(x => x.id === userId);
+  if (!u) return;
+  if (!confirm('Удалить пользователя «' + u.name + '»? Это действие нельзя отменить.')) return;
+  users = users.filter(x => x.id !== userId);
+  saveState('users', users);
+  loadAdminUsers(currentUser.role === 'owner');
+  if (currentUser.role === 'owner') loadAdminStats();
+  showToast('Пользователь удалён');
+}
 function updateUserDiscount(userId, discount) { const u = users.find(x=>x.id===userId); if (!u) return; u.discount = parseInt(discount) || 0; saveState('users', users); showToast('Скидка обновлена'); }
 function changeUserRole(userId, newRole) { const u = users.find(x=>x.id===userId); if (!u) return; u.role = newRole; saveState('users', users); if (currentUser && currentUser.id === userId) { currentUser.role = newRole; updateNavForUser(); } showToast('Роль пользователя изменена'); }
-function loadAdminLeads() { document.getElementById('leads-tbody').innerHTML = leads.map(l => '<tr><td><strong>' + l.name + '</strong></td><td style="color:var(--text-muted);">' + l.contact + '</td><td>' + l.message + '</td><td style="color:var(--text-muted);white-space:nowrap;">' + l.date + '</td></tr>').join(''); }
+function loadAdminLeads() {
+  document.getElementById('leads-tbody').innerHTML = leads.length === 0
+    ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:30px;">Заявок пока нет</td></tr>'
+    : leads.slice().reverse().map(l => {
+        const isPhone = /^\+?[\d\s\(\)\-]{7,}$/.test(l.contact);
+        const isTg = l.contact.includes('@') && !l.contact.includes('.');
+        const contactHtml = isPhone
+          ? '<a href="tel:' + l.contact.replace(/\s/g,'') + '" style="color:var(--accent);font-weight:600;">' + l.contact + '</a>'
+          : isTg
+          ? '<a href="https://t.me/' + l.contact.replace('@','') + '" target="_blank" style="color:var(--accent);">' + l.contact + '</a>'
+          : '<a href="mailto:' + l.contact + '" style="color:var(--accent);">' + l.contact + '</a>';
+        return '<tr><td><strong>' + l.name + '</strong></td>'
+          + '<td>' + contactHtml + '</td>'
+          + '<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (l.message||'') + '">' + (l.message||'—') + '</td>'
+          + '<td style="color:var(--text-muted);white-space:nowrap;">' + l.date + '</td>'
+          + '<td class="td-actions">'
+          + '<button class="btn btn-success" onclick="openLeadModal(' + l.id + ')" title="Открыть заявку">👁 Открыть</button>'
+          + '</td></tr>';
+      }).join('');
+}
+
+function openLeadModal(leadId) {
+  const l = leads.find(x => x.id === leadId);
+  if (!l) return;
+  const isPhone = /^\+?[\d\s\(\)\-]{7,}$/.test(l.contact);
+  const alreadyUser = users.find(u => u.name === l.name || u.email === l.contact);
+  document.getElementById('lead-modal-content').innerHTML =
+    '<div style="background:var(--bg);border-radius:var(--radius-sm);padding:18px;margin-bottom:18px;">'
+    + '<div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Имя</div>'
+    + '<div style="font-size:18px;font-weight:600;margin-bottom:12px;">' + l.name + '</div>'
+    + '<div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Контакт</div>'
+    + '<div style="font-size:16px;font-weight:500;margin-bottom:12px;">' + l.contact + '</div>'
+    + '<div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Сообщение</div>'
+    + '<div style="font-size:14px;line-height:1.7;color:var(--text-muted);">' + (l.message || '—') + '</div>'
+    + '<div style="margin-top:10px;font-size:12px;color:var(--text-muted);">Дата: ' + l.date + '</div>'
+    + '</div>'
+    + '<div style="display:flex;flex-direction:column;gap:10px;">'
+    + (isPhone ? '<a href="tel:' + l.contact.replace(/\s/g,'') + '" class="btn btn-primary" style="text-decoration:none;justify-content:center;">📞 Позвонить ' + l.contact + '</a>' : '')
+    + (!alreadyUser ? '<button class="btn btn-edit" onclick="addUserFromLead(' + l.id + ')">👤 Добавить как нового пользователя</button>' : '<div style="color:var(--accent);font-size:13px;text-align:center;">✓ Уже зарегистрирован в системе</div>')
+    + '<button class="btn btn-danger" onclick="deleteLead(' + l.id + ')">🗑 Удалить заявку</button>'
+    + '</div>';
+  openModal('lead-modal');
+}
+
+function deleteLead(leadId) {
+  if (!confirm('Удалить заявку?')) return;
+  leads = leads.filter(l => l.id !== leadId);
+  saveState('leads', leads);
+  closeModal('lead-modal');
+  loadAdminLeads();
+  if (currentUser && currentUser.role === 'owner') loadAdminStats();
+  showToast('Заявка удалена');
+}
+
+function addUserFromLead(leadId) {
+  const l = leads.find(x => x.id === leadId);
+  if (!l) return;
+  const login = prompt('Придумайте логин для ' + l.name + ':', l.name.split(' ')[0].toLowerCase());
+  if (!login) return;
+  if (users.find(u => u.username === login)) { showToast('Логин уже занят, выберите другой'); return; }
+  const tempPass = Math.random().toString(36).slice(2, 8);
+  const newUser = {
+    id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+    username: login, password: tempPass, role: 'user',
+    name: l.name, email: l.contact.includes('@') ? l.contact : '',
+    bio: '', joinedDate: new Date().toISOString().slice(0,10), avatar: '', discount: 0
+  };
+  users.push(newUser);
+  saveState('users', users);
+  closeModal('lead-modal');
+  loadAdminUsers(currentUser.role === 'owner');
+  showToast('Пользователь создан! Логин: ' + login + ' / Пароль: ' + tempPass);
+  alert('Данные для входа:\nЛогин: ' + login + '\nВременный пароль: ' + tempPass + '\n\nПередайте их участнику — при первом входе он сможет сменить пароль.');
+}
 function loadRevenueChart() { const months = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек']; const byMonth = Array(12).fill(0); purchases.forEach(p => { const m = new Date(p.date).getMonth(); byMonth[m] += p.price; }); const maxVal = Math.max(...byMonth) || 1; document.getElementById('revenue-chart').innerHTML = months.map((m,i) => { const h = Math.round((byMonth[i]/maxVal)*110) + 4; const k = byMonth[i] > 0 ? (byMonth[i]/1000).toFixed(0)+'к' : '—'; return '<div class="rev-bar-wrap" onclick="showRevenueDetails(' + i + ')"><div class="rev-bar" style="height:' + h + 'px;"></div><div class="rev-month">' + m + '</div><div class="rev-amount">' + k + '</div></div>'; }).join(''); }
 function showRevenueDetails(monthIndex) { const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']; const monthPurchases = purchases.filter(p => new Date(p.date).getMonth() === monthIndex); if (monthPurchases.length === 0) { document.getElementById('revenue-detail-content').innerHTML = '<p style="color:var(--text-muted);">Нет покупок за этот месяц</p>'; openModal('revenue-detail-modal'); return; } const details = monthPurchases.map(pu => { const user = users.find(u => u.id === pu.userId); const prog = programs.find(p => p.id === pu.programId); return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><div><div style="font-weight:600;">' + (user ? user.name : 'Пользователь') + '</div><div style="font-size:12px;color:var(--text-muted);">' + (prog ? prog.name : 'Программа') + '</div></div><div style="font-weight:600;color:var(--accent2);">' + pu.price.toLocaleString('ru') + ' ₽</div></div>'; }).join(''); document.getElementById('revenue-detail-content').innerHTML = '<h3 style="font-family:var(--font-family);font-size:20px;margin-bottom:15px;">' + months[monthIndex] + ' ' + new Date().getFullYear() + '</h3>' + details + '<div style="margin-top:15px;padding-top:10px;border-top:2px solid var(--accent);display:flex;justify-content:space-between;font-weight:700;"><span>Итого:</span><span>' + monthPurchases.reduce((s,p)=>s+p.price,0).toLocaleString('ru') + ' ₽</span></div>'; openModal('revenue-detail-modal'); }
 function showUserStats(userId) { const u = users.find(x=>x.id===userId); const userPurchases = purchases.filter(p=>p.userId===userId); const total = userPurchases.reduce((s,p)=>s+p.price,0); document.getElementById('user-stats-content').innerHTML = '<div style="margin-bottom:18px;display:flex;align-items:center;gap:14px;"><div class="user-avatar" style="width:52px;height:52px;font-size:22px;">' + u.name[0] + '</div><div><div style="font-size:20px;font-family:var(--font-family);font-weight:500;">' + u.name + '</div><div style="font-size:13px;color:var(--text-muted);">' + u.email + '</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;"><div class="stat-card"><div class="stat-label">Путешествий</div><div class="stat-value" style="font-size:32px;">' + userPurchases.length + '</div></div><div class="stat-card"><div class="stat-label">Потрачено</div><div class="stat-value" style="font-size:32px;">' + (total/1000).toFixed(0) + 'к ₽</div></div></div><h4 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:10px;">История покупок</h4>' + (userPurchases.length === 0 ? '<p style="color:var(--text-muted);">Пока нет покупок.</p>' : userPurchases.map(pu => { const prog = programs.find(p=>p.id===pu.programId); return '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);"><div><div style="font-weight:600;">' + (prog?prog.name:'—') + '</div><div style="font-size:12px;color:var(--text-muted);">' + pu.date + '</div></div><div style="font-family:var(--font-family);font-size:19px;font-weight:600;color:var(--accent2);">' + pu.price.toLocaleString('ru') + ' ₽</div></div>'; }).join('')); openModal('user-stats-modal'); }
