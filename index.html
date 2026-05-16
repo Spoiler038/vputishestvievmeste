@@ -627,48 +627,431 @@ body.mob-admin-active #page-dashboard { display: none !important; }
 </div>
 </div></div></div></div></div>
 
-<!-- =====  ПАНЕЛЬ ===== -->
-<div id="page-admin" class="hidden admin-panel"><div class="admin-layout"><aside class="admin-sidebar"><div class="admin-sidebar-logo">⚙ Управление</div><div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div><div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div><div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div><div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div><div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div><div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div><div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы путешествуем</div><div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div><div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;"><span class="admin-nav-icon">🏠</span> На сайт</div></aside><main class="admin-main"><div class="admin-section active" id="admin-dashboard"><div class="admin-page-title">Дашборд</div><div class="admin-page-sub">Сводная статистика по сайту</div><div class="stats-grid" id="stats-grid"></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;"><h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3><div class="revenue-grid" id="revenue-chart"></div></div></div><div class="admin-section" id="admin-programs"><div class="admin-page-title">Программы</div><div class="admin-page-sub">Управление маршрутами путешествий</div><div class="admin-bar-top"><button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr></thead><tbody id="programs-tbody"></tbody></table></div></div><div class="admin-section" id="admin-users"><div class="admin-page-title">Пользователи</div><div class="admin-page-sub">Список зарегистрированных участников</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr></thead><tbody id="users-tbody"></tbody></table></div></div><div class="admin-section" id="admin-leads"><div class="admin-page-title">Заявки</div><div class="admin-page-sub">Входящие запросы с сайта</div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th><th>Действия</th></tr></thead><tbody id="leads-tbody"></tbody></table></div></div><div class="admin-section" id="admin-settings"><div class="admin-page-title">Настройки сайта</div><div class="admin-page-sub">Код приглашения и виды транспорта</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px;"><div class="form-group"><label>Код приглашения для регистрации</label><input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026"><button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button><p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p></div></div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><h3 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:8px;">Виды транспорта</h3><p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">Управляйте видами транспорта для фильтра и программ. Иконки (80×80 px) хранятся на GitHub.</p><div id="transport-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;"></div><div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);"><h4 style="font-size:14px;font-weight:600;margin-bottom:12px;">+ Добавить новый вид транспорта</h4><div style="display:grid;grid-template-columns:60px 1fr 1fr;gap:10px;align-items:flex-end;"><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Эмодзи</label><input type="text" class="form-input" id="new-transport-emoji" placeholder="🚁" style="text-align:center;font-size:20px;"></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Название</label><input type="text" class="form-input" id="new-transport-label" placeholder="Вертолёт"></div><div><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Значение (lat.)</label><input type="text" class="form-input" id="new-transport-val" placeholder="вертолёт"></div></div><div style="margin-top:10px;"><label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Путь к иконке на GitHub (необязательно)</label><input type="text" class="form-input" id="new-transport-icon" <div style="margin-top:10px;">
-  <label style="display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Описание для карточки сайта</label>
-  <textarea class="form-textarea" id="new-transport-desc" placeholder="Несколько слов об этом виде транспорта..." style="min-height:70px;"></textarea>
-</div> placeholder="icons/transport/helicopter.png"></div><button class="btn btn-primary" style="margin-top:12px;" onclick="addTransportType()">Добавить вид транспорта</button></div></div></div><div class="admin-section" id="admin-founder"><div class="admin-page-title">Об основателе клуба</div><div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Имя (заголовок)</label><input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова"></div><div class="form-group"><label>Годы опыта (число с +)</label><input type="text" class="form-input" id="founder-admin-years" placeholder="7+"></div><div class="form-group"><label>Фото основателя (URL или загрузите)</label><div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="founder-photo-input" accept="image/*" style="display:none"></div><img id="founder-photo-preview" class="photo-preview" style="display:none; max-width:200px;"><input type="hidden" id="founder-photo-url" value=""></div><div class="form-group"><label>Основной текст (первый абзац)</label><textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea></div><div class="form-group"><label>Второй абзац</label><textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;"><div><div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div><div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div></div><div><div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div><div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div></div><div><div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div><div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div></div></div><button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button></div></div><div class="admin-section" id="admin-howto"><div class="admin-page-title">Как мы путешествуем</div><div class="admin-page-sub">Редактирование карточек способов перемещения (фото 80x80px)</div><div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div><button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button></div><div class="admin-section" id="admin-contacts"><div class="admin-page-title">Контактная информация</div><div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div><div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);"><div class="form-group"><label>Телефон</label><input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx"></div><div class="form-group"><label>Email</label><input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru"></div><div class="form-group"><label>Telegram</label><input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together"></div><button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button></div></div></main></div></div>
+<!-- ===== АДМИНИСТРАТИВНАЯ ПАНЕЛЬ ===== -->
+<div id="page-admin" class="hidden admin-panel">
+  <div class="admin-layout">
+
+    <!-- САЙДБАР -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">⚙ Управление</div>
+      <div class="admin-nav-item active" onclick="switchAdmin('dashboard')"><span class="admin-nav-icon">📊</span> Дашборд</div>
+      <div class="admin-nav-item" onclick="switchAdmin('programs')"><span class="admin-nav-icon">🗺</span> Программы</div>
+      <div class="admin-nav-item" onclick="switchAdmin('users')"><span class="admin-nav-icon">👥</span> Пользователи</div>
+      <div class="admin-nav-item" onclick="switchAdmin('leads')"><span class="admin-nav-icon">📩</span> Заявки</div>
+      <div class="admin-nav-item" onclick="switchAdmin('settings')"><span class="admin-nav-icon">⚙️</span> Настройки</div>
+      <div class="admin-nav-item" onclick="switchAdmin('founder')"><span class="admin-nav-icon">👤</span> Об основателе</div>
+      <div class="admin-nav-item" onclick="switchAdmin('howto')"><span class="admin-nav-icon">🚂</span> Как мы путешествуем</div>
+      <div class="admin-nav-item" onclick="switchAdmin('contacts')"><span class="admin-nav-icon">📞</span> Контакты</div>
+      <div class="admin-nav-item" onclick="showPage('home')" style="margin-top:32px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;">
+        <span class="admin-nav-icon">🏠</span> На сайт
+      </div>
+    </aside>
+
+    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+    <main class="admin-main">
+
+      <!-- ДАШБОРД -->
+      <div class="admin-section active" id="admin-dashboard">
+        <div class="admin-page-title">Дашборд</div>
+        <div class="admin-page-sub">Сводная статистика по сайту</div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-top:28px;">
+          <h3 style="font-family:var(--font-family);font-size:22px;font-weight:500;margin-bottom:22px;">Выручка по месяцам</h3>
+          <div class="revenue-grid" id="revenue-chart"></div>
+        </div>
+      </div>
+
+      <!-- ПРОГРАММЫ -->
+      <div class="admin-section" id="admin-programs">
+        <div class="admin-page-title">Программы</div>
+        <div class="admin-page-sub">Управление маршрутами путешествий</div>
+        <div class="admin-bar-top">
+          <button class="btn btn-primary" onclick="openAddProgram()">+ Добавить программу</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Фото</th><th>Название</th><th>Сезон</th><th>Транспорт</th><th>Дней</th><th>Цена</th><th>Действия</th></tr>
+            </thead>
+            <tbody id="programs-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ПОЛЬЗОВАТЕЛИ -->
+      <div class="admin-section" id="admin-users">
+        <div class="admin-page-title">Пользователи</div>
+        <div class="admin-page-sub">Список зарегистрированных участников</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Имя</th><th>Логин</th><th>Роль</th><th>Путешествий</th><th>Скидка (%)</th><th>Действия</th></tr>
+            </thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ЗАЯВКИ -->
+      <div class="admin-section" id="admin-leads">
+        <div class="admin-page-title">Заявки</div>
+        <div class="admin-page-sub">Входящие запросы с сайта</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Имя</th><th>Контакт</th><th>Сообщение</th><th>Дата</th><th>Действия</th></tr>
+            </thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- НАСТРОЙКИ -->
+      <div class="admin-section" id="admin-settings">
+        <div class="admin-page-title">Настройки сайта</div>
+        <div class="admin-page-sub">Код приглашения и виды транспорта</div>
+
+        <!-- Код приглашения -->
+        <div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);margin-bottom:20px;">
+          <div class="form-group">
+            <label>Код приглашения для регистрации</label>
+            <input type="text" class="form-input" id="invite-code" placeholder="VPUTI2026">
+            <button class="btn btn-primary" style="margin-top:10px;" onclick="saveInviteCode()">Сохранить код</button>
+            <p class="auth-hint" style="margin-top:10px;">Текущий код: <span id="current-invite-code">VPUTI2026</span></p>
+          </div>
+        </div>
+
+        <!-- Виды транспорта -->
+        <div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);">
+          <h3 style="font-family:var(--font-family);font-size:20px;font-weight:500;margin-bottom:8px;">Виды транспорта</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;">
+            Управляйте видами транспорта для фильтра, программ и карточек «Как мы путешествуем».
+            Иконки (80×80 px) хранятся на GitHub в папке
+            <code style="background:var(--bg2);padding:2px 6px;border-radius:4px;font-size:12px;">icons/transport/</code>
+          </p>
+
+          <!-- Список текущих транспортов -->
+          <div id="transport-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;"></div>
+
+          <!-- Форма добавления нового транспорта -->
+          <div style="background:var(--bg);border-radius:var(--radius-sm);padding:20px;border:1px solid var(--border);">
+            <h4 style="font-size:14px;font-weight:600;margin-bottom:16px;">+ Добавить новый вид транспорта</h4>
+
+            <!-- Эмодзи + Название + Значение -->
+            <div style="display:grid;grid-template-columns:70px 1fr 1fr;gap:12px;margin-bottom:14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Эмодзи</label>
+                <input type="text" class="form-input" id="new-transport-emoji"
+                  placeholder="🚁" style="text-align:center;font-size:22px;">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Название</label>
+                <input type="text" class="form-input" id="new-transport-label" placeholder="Вертолёт">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Значение (рус.)</label>
+                <input type="text" class="form-input" id="new-transport-val" placeholder="вертолёт">
+              </div>
+            </div>
+
+            <!-- Иконка на GitHub -->
+            <div class="form-group">
+              <label>Имя файла иконки на GitHub</label>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:11px;color:var(--text-muted);white-space:nowrap;background:var(--bg2);padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);flex-shrink:0;">
+                  …/icons/transport/
+                </span>
+                <input type="text" class="form-input" id="new-transport-icon"
+                  placeholder="Helicopter.png" style="flex:1;"
+                  oninput="previewNewTransportIcon(this.value)">
+              </div>
+              <!-- Предпросмотр иконки -->
+              <div style="display:flex;align-items:center;gap:10px;margin-top:8px;min-height:36px;">
+                <img id="new-transport-icon-preview"
+                  style="width:48px;height:48px;object-fit:contain;border-radius:8px;background:var(--accent-light);padding:4px;display:none;"
+                  alt="Предпросмотр иконки">
+                <span id="new-transport-icon-hint" style="font-size:12px;color:var(--text-muted);">
+                  Введите имя файла — появится предпросмотр
+                </span>
+              </div>
+            </div>
+
+            <!-- Описание для карточки -->
+            <div class="form-group">
+              <label>Описание для карточки «Как мы путешествуем»</label>
+              <textarea class="form-textarea" id="new-transport-desc"
+                placeholder="Несколько слов об этом виде транспорта..."
+                style="min-height:80px;"></textarea>
+            </div>
+
+            <button class="btn btn-primary" onclick="addTransportType()">+ Добавить вид транспорта</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ОБ ОСНОВАТЕЛЕ -->
+      <div class="admin-section" id="admin-founder">
+        <div class="admin-page-title">Об основателе клуба</div>
+        <div class="admin-page-sub">Редактирование раздела «Основатель клуба» на главной странице</div>
+        <div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);">
+          <div class="form-group">
+            <label>Имя (заголовок)</label>
+            <input type="text" class="form-input" id="founder-admin-name" placeholder="Марина Пищальникова">
+          </div>
+          <div class="form-group">
+            <label>Годы опыта (число с +)</label>
+            <input type="text" class="form-input" id="founder-admin-years" placeholder="7+">
+          </div>
+          <div class="form-group">
+            <label>Фото основателя (URL или загрузите)</label>
+            <div class="photo-upload-area" onclick="document.getElementById('founder-photo-input').click()">
+              <span>📸 Нажмите, чтобы выбрать фото</span>
+              <input type="file" id="founder-photo-input" accept="image/*" style="display:none">
+            </div>
+            <img id="founder-photo-preview" class="photo-preview" style="display:none;max-width:200px;">
+            <input type="hidden" id="founder-photo-url" value="">
+          </div>
+          <div class="form-group">
+            <label>Основной текст (первый абзац)</label>
+            <textarea class="form-textarea" id="founder-admin-bio1" style="min-height:100px;"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Второй абзац</label>
+            <textarea class="form-textarea" id="founder-admin-bio2" style="min-height:100px;"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;">
+            <div>
+              <div class="form-group"><label>Ценность 1 — Заголовок</label><input type="text" class="form-input" id="val1-title"></div>
+              <div class="form-group"><label>Ценность 1 — Текст</label><input type="text" class="form-input" id="val1-text"></div>
+            </div>
+            <div>
+              <div class="form-group"><label>Ценность 2 — Заголовок</label><input type="text" class="form-input" id="val2-title"></div>
+              <div class="form-group"><label>Ценность 2 — Текст</label><input type="text" class="form-input" id="val2-text"></div>
+            </div>
+            <div>
+              <div class="form-group"><label>Ценность 3 — Заголовок</label><input type="text" class="form-input" id="val3-title"></div>
+              <div class="form-group"><label>Ценность 3 — Текст</label><input type="text" class="form-input" id="val3-text"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="saveFounderContent()">Сохранить и применить</button>
+        </div>
+      </div>
+
+      <!-- КАК МЫ ПУТЕШЕСТВУЕМ -->
+      <div class="admin-section" id="admin-howto">
+        <div class="admin-page-title">Как мы путешествуем</div>
+        <div class="admin-page-sub">
+          Описания карточек формируются на основе активных видов транспорта из раздела «Настройки».
+          Здесь можно отредактировать текст каждой карточки и фото.
+        </div>
+        <div id="how-editor-cards" style="display:flex;flex-direction:column;gap:16px;margin-bottom:20px;"></div>
+        <button class="btn btn-primary" onclick="saveHowContent()">Сохранить и применить</button>
+      </div>
+
+      <!-- КОНТАКТЫ -->
+      <div class="admin-section" id="admin-contacts">
+        <div class="admin-page-title">Контактная информация</div>
+        <div class="admin-page-sub">Данные, отображаемые в разделе «Написать Марине»</div>
+        <div style="background:var(--surface);border-radius:var(--radius);padding:28px;border:1px solid var(--border);">
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="text" class="form-input" id="admin-contact-phone" placeholder="+7 (xxx) xxx-xx-xx">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-input" id="admin-contact-email" placeholder="marina@vputi.ru">
+          </div>
+          <div class="form-group">
+            <label>Telegram</label>
+            <input type="text" class="form-input" id="admin-contact-tg" placeholder="@vputi_together">
+          </div>
+          <button class="btn btn-primary" onclick="saveContacts()">Сохранить и применить</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
 
 <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
-<div class="modal-overlay" id="program-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="modal-program-title">Добавить программу</h2><button class="modal-close" onclick="closeModal('program-modal')">✕</button></div><div class="modal-grid"><div class="form-group full"><label>Фото программы</label><div class="photo-upload-area" onclick="document.getElementById('program-photo-input').click()"><span>📸 Нажмите, чтобы выбрать фото</span><input type="file" id="program-photo-input" accept="image/*" style="display:none" onchange="handleProgramPhotoUpload(event)"></div><img id="program-photo-preview" class="photo-preview" style="display:none;"><input type="hidden" id="m-photo" value=""></div><div class="form-group full"><label>Название программы</label><input type="text" class="form-input" id="m-name" placeholder="Алтай: путь к Белухе"></div><div class="form-group"><label>Сезон</label><select class="filter-select" id="m-season"><option value="весна">Весна</option><option value="лето">Лето</option><option value="осень">Осень</option><option value="зима">Зима</option></select></div><div class="form-group"><label>Транспорт</label><select class="filter-select" id="m-transport"><option value="поезд">Поезд</option><option value="самолёт">Самолёт</option><option value="авто">Авто</option><option value="корабль">Корабль / паром</option></select></div><div class="form-group"><label>Длительность (дней)</label><input type="number" class="form-input" id="m-days" placeholder="7"></div><div class="form-group"><label>Макс. участников</label><input type="number" class="form-input" id="m-max-people" placeholder="10"></div><div class="form-group"><label>Цена (₽)</label><input type="number" class="form-input" id="m-price" placeholder="65000"></div><div class="form-group"><label>Страна/регион</label><input type="text" class="form-input" id="m-country" placeholder="Россия, Алтай"></div><div class="form-group full"><label>Краткое описание</label><input type="text" class="form-input" id="m-short-desc" placeholder="Суть программы одним предложением"></div><div class="form-group full"><label>Полное описание</label><textarea class="form-textarea" id="m-full-desc" placeholder="Подробный рассказ о маршруте..."></textarea></div><div class="form-group full"><label>Теги (через запятую)</label><input type="text" class="form-input" id="m-tags" placeholder="горы, лес, активный"></div><div class="form-group full"><label>Что включено (каждый пункт с новой строки)</label><textarea class="form-textarea" id="m-includes" placeholder="Трансфер из аэропорта&#10;Проживание в гестхаусах&#10;Все завтраки и ужины"></textarea></div><div class="form-group full"><label class="checkbox-label" id="featured-label" onclick="toggleFeaturedLabel()"><input type="checkbox" id="m-featured"> ⭐ Показывать на главной странице (карусель «Избранные»)</label></div></div><div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px;"><button class="btn btn-outline" onclick="closeModal('program-modal')">Отмена</button><button class="btn btn-primary" id="save-program-btn" onclick="saveProgram()">Сохранить программу</button></div></div></div>
-<div class="modal-overlay" id="user-stats-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title">Статистика участника</h2><button class="modal-close" onclick="closeModal('user-stats-modal')">✕</button></div><div id="user-stats-content"></div></div></div>
-<div class="modal-overlay" id="revenue-detail-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title" id="revenue-modal-title">Детали выручки</h2><button class="modal-close" onclick="closeModal('revenue-detail-modal')">✕</button></div><div id="revenue-detail-content"></div></div></div>
+<div class="modal-overlay" id="program-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-program-title">Добавить программу</h2>
+      <button class="modal-close" onclick="closeModal('program-modal')">✕</button>
+    </div>
+    <div class="modal-grid">
+      <div class="form-group full">
+        <label>Фото программы</label>
+        <div class="photo-upload-area" onclick="document.getElementById('program-photo-input').click()">
+          <span>📸 Нажмите, чтобы выбрать фото</span>
+          <input type="file" id="program-photo-input" accept="image/*" style="display:none" onchange="handleProgramPhotoUpload(event)">
+        </div>
+        <img id="program-photo-preview" class="photo-preview" style="display:none;">
+        <input type="hidden" id="m-photo" value="">
+      </div>
+      <div class="form-group full">
+        <label>Название программы</label>
+        <input type="text" class="form-input" id="m-name" placeholder="Алтай: путь к Белухе">
+      </div>
+      <div class="form-group">
+        <label>Сезон</label>
+        <select class="filter-select" id="m-season">
+          <option value="весна">Весна</option>
+          <option value="лето">Лето</option>
+          <option value="осень">Осень</option>
+          <option value="зима">Зима</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Транспорт</label>
+        <select class="filter-select" id="m-transport">
+          <option value="поезд">Поезд</option>
+          <option value="самолёт">Самолёт</option>
+          <option value="авто">Авто</option>
+          <option value="корабль">Корабль / паром</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Длительность (дней)</label>
+        <input type="number" class="form-input" id="m-days" placeholder="7">
+      </div>
+      <div class="form-group">
+        <label>Макс. участников</label>
+        <input type="number" class="form-input" id="m-max-people" placeholder="10">
+      </div>
+      <div class="form-group">
+        <label>Цена (₽)</label>
+        <input type="number" class="form-input" id="m-price" placeholder="65000">
+      </div>
+      <div class="form-group">
+        <label>Страна/регион</label>
+        <input type="text" class="form-input" id="m-country" placeholder="Россия, Алтай">
+      </div>
+      <div class="form-group full">
+        <label>Краткое описание</label>
+        <input type="text" class="form-input" id="m-short-desc" placeholder="Суть программы одним предложением">
+      </div>
+      <div class="form-group full">
+        <label>Полное описание</label>
+        <textarea class="form-textarea" id="m-full-desc" placeholder="Подробный рассказ о маршруте..."></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Теги (через запятую)</label>
+        <input type="text" class="form-input" id="m-tags" placeholder="горы, лес, активный">
+      </div>
+      <div class="form-group full">
+        <label>Что включено (каждый пункт с новой строки)</label>
+        <textarea class="form-textarea" id="m-includes" placeholder="Трансфер из аэропорта&#10;Проживание в гестхаусах&#10;Все завтраки и ужины"></textarea>
+      </div>
+      <div class="form-group full">
+        <label class="checkbox-label" id="featured-label" onclick="toggleFeaturedLabel()">
+          <input type="checkbox" id="m-featured"> ⭐ Показывать на главной странице (карусель «Избранные»)
+        </label>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:22px;">
+      <button class="btn btn-outline" onclick="closeModal('program-modal')">Отмена</button>
+      <button class="btn btn-primary" id="save-program-btn" onclick="saveProgram()">Сохранить программу</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="user-stats-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Статистика участника</h2>
+      <button class="modal-close" onclick="closeModal('user-stats-modal')">✕</button>
+    </div>
+    <div id="user-stats-content"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="revenue-detail-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="revenue-modal-title">Детали выручки</h2>
+      <button class="modal-close" onclick="closeModal('revenue-detail-modal')">✕</button>
+    </div>
+    <div id="revenue-detail-content"></div>
+  </div>
+</div>
 
 <!-- Модальное окно заявки -->
-<div class="modal-overlay" id="lead-modal"><div class="modal" style="max-width:500px;"><div class="modal-header"><h2 class="modal-title">Заявка</h2><button class="modal-close" onclick="closeModal('lead-modal')">✕</button></div><div id="lead-modal-content"></div></div></div>
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal" style="max-width:500px;">
+    <div class="modal-header">
+      <h2 class="modal-title">Заявка</h2>
+      <button class="modal-close" onclick="closeModal('lead-modal')">✕</button>
+    </div>
+    <div id="lead-modal-content"></div>
+  </div>
+</div>
 
 <!-- Модальное окно редактирования пользователя -->
-<div class="modal-overlay" id="user-edit-modal"><div class="modal" style="max-width:480px;"><div class="modal-header"><h2 class="modal-title">Редактировать участника</h2><button class="modal-close" onclick="closeModal('user-edit-modal')">✕</button></div><div id="user-edit-content"></div></div></div>
+<div class="modal-overlay" id="user-edit-modal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h2 class="modal-title">Редактировать участника</h2>
+      <button class="modal-close" onclick="closeModal('user-edit-modal')">✕</button>
+    </div>
+    <div id="user-edit-content"></div>
+  </div>
+</div>
 
 <!-- ===== ФОРМА ВХОДА / РЕГИСТРАЦИИ ===== -->
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-box">
-    <div class="auth-logo"><p>ВПУТЕШЕСТВИЕВМЕСТЕ</p><span>Войдите, чтобы получить доступ к сообществу</span></div>
+    <div class="auth-logo">
+      <p>ВПУТЕШЕСТВИЕВМЕСТЕ</p>
+      <span>Войдите, чтобы получить доступ к сообществу</span>
+    </div>
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchAuthTab('login')">Войти</button>
       <button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
     </div>
+
     <!-- ФОРМА ВХОДА -->
     <div class="auth-form active" id="auth-login">
       <div class="auth-error" id="login-error">Неверный логин или пароль</div>
-      <div class="form-group"><label>Логин</label><input type="text" class="form-input" id="login-username" placeholder=Имя пользователя"></div>
-      <div class="form-group"><label>Пароль</label><input type="password" class="form-input" id="login-password" placeholder="Пароль"></div>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" class="form-input" id="login-username" placeholder="Имя пользователя">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" class="form-input" id="login-password" placeholder="Пароль">
+      </div>
       <button class="btn btn-primary auth-btn" onclick="doLogin()">Войти</button>
-      <div style="text-align:center; margin-top:10px;"><a href="#" onclick="showResetPassword()" style="font-size:12px; color:var(--accent2);">Забыли пароль?</a></div>
+      <div style="text-align:center;margin-top:10px;">
+        <a href="#" onclick="showResetPassword()" style="font-size:12px;color:var(--accent2);">Забыли пароль?</a>
+      </div>
       <div class="auth-hint">Тест: marina / owner — admin / admin — user / user</div>
     </div>
+
     <!-- ФОРМА РЕГИСТРАЦИИ -->
     <div class="auth-form" id="auth-register">
       <div class="auth-error" id="register-error"></div>
-      <div class="form-group"><label>Имя</label><input type="text" class="form-input" id="reg-name" placeholder="Иван Иванов"></div>
-      <div class="form-group"><label>Логин</label><input type="text" class="form-input" id="reg-username" placeholder="ivan_travels"></div>
-      <div class="form-group"><label>Email</label><input type="email" class="form-input" id="reg-email" placeholder="ivan@mail.ru"></div>
-      <div class="form-group"><label>Пароль</label><input type="password" class="form-input" id="reg-password" placeholder="••••••"></div>
-      <div class="form-group"><label>Код приглашения</label><input type="text" class="form-input" id="reg-invite" placeholder="Код от Марины"></div>
+      <div class="form-group">
+        <label>Имя</label>
+        <input type="text" class="form-input" id="reg-name" placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label>Логин</label>
+        <input type="text" class="form-input" id="reg-username" placeholder="ivan_travels">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-input" id="reg-email" placeholder="ivan@mail.ru">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" class="form-input" id="reg-password" placeholder="••••••">
+      </div>
+      <div class="form-group">
+        <label>Код приглашения</label>
+        <input type="text" class="form-input" id="reg-invite" placeholder="Код от Марины">
+      </div>
       <!-- БЛОК СОГЛАСИЙ -->
       <div class="consent-block">
         <label>
@@ -687,7 +1070,10 @@ body.mob-admin-active #page-dashboard { display: none !important; }
       <button class="btn btn-primary auth-btn" onclick="doRegister()">Зарегистрироваться</button>
       <div class="auth-hint">Код для теста: <span id="hint-invite-code">VPUTI2026</span></div>
     </div>
-    <div style="text-align:center;margin-top:14px;"><button class="btn btn-outline btn-sm" onclick="closeAuth()">Закрыть</button></div>
+
+    <div style="text-align:center;margin-top:14px;">
+      <button class="btn btn-outline btn-sm" onclick="closeAuth()">Закрыть</button>
+    </div>
   </div>
 </div>
 
